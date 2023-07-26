@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" :model="loginForm" :rules="loginRules">
+    <el-form class="login-form" ref="loginFromRef" :model="loginForm" :rules="loginRules">
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
@@ -30,7 +30,13 @@
         </span>
       </el-form-item>
 
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px">登录</el-button>
+      <el-button
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        :loading="loading"
+        @click="loginHandler"
+        >登录</el-button
+      >
     </el-form>
   </div>
 </template>
@@ -38,6 +44,8 @@
 <script setup>
 import { ref } from 'vue'
 import { validatePassword } from './rules'
+import { useUserStore } from '@/stores/user'
+import { useRouter } from 'vue-router'
 
 const loginForm = ref({
   username: 'super-admin',
@@ -58,7 +66,7 @@ const loginRules = ref({
     }
   ]
 })
-
+//密码问题框
 const passwordType = ref('password')
 const onChangePwdType = () => {
   if (passwordType.value === 'password') {
@@ -67,9 +75,23 @@ const onChangePwdType = () => {
     passwordType.value = 'password'
   }
 }
-// const onSubmit = () => {
-//   console.log('submit!')
-// }
+
+//登录问题处理
+const loading = ref(false)
+const loginFromRef = ref(null)
+const userStore = useUserStore()
+const router = useRouter()
+const loginHandler = () => {
+  //参数校验
+  loginFromRef.value.validate((valid) => {
+    if (!valid) return
+    loading.value = true
+    //校验通过 进行登录
+    userStore.getToken(loginForm.value.username, loginForm.value.password)
+    loading.value = false
+    router.push('/')
+  })
+}
 </script>
 
 <style lang="scss" scoped>
