@@ -7,6 +7,7 @@ import '@/styles/index.scss'
 import 'virtual:svg-icons-register'
 import svg from '@/components/svg/index.vue'
 import 'element-plus/dist/index.css'
+import './permission'
 
 const app = createApp(App)
 

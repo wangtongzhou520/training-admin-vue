@@ -1,13 +1,15 @@
 import { login } from '@/api/login'
+import { getUserInfo } from '@/api/user'
 import { defineStore } from 'pinia'
 import { TOKEN } from '@/constant'
+import { ref } from 'vue'
 
 export const useUserStore = defineStore(
   'user',
   () => {
-    console.log(TOKEN)
-    const accessToken = ref({})
-    const refreshToken = ref({})
+    const accessToken = ref(null)
+    const refreshToken = ref(null)
+    const userId = ref(null)
     const getToken = async (username, password) => {
       const result = await login({
         username,
@@ -15,8 +17,15 @@ export const useUserStore = defineStore(
       })
       refreshToken.value = result.refreshToken
       accessToken.value = result.accessToken
+      userId.value = result.userId
     }
-    return { accessToken, refreshToken, getToken }
+    const userInfo = async (userId) => {
+      let params = {
+        id: userId
+      }
+      return await getUserInfo(params)
+    }
+    return { accessToken, refreshToken, userId, getToken, userInfo }
   },
   {
     persist: {

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Index from '@/views/Index.vue'
+import Index from '@/layout/Index.vue'
 import NotFound from '@/views/404.vue'
 import Login from '@/views/login/Login.vue'
 

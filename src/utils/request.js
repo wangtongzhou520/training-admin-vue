@@ -1,10 +1,25 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import { useUserStore } from '@/stores/user'
 
 const service = axios.create({
   baseURL: '/api',
   timeout: 5000
 })
+// request拦截器
+service.interceptors.request.use(
+  (config) => {
+    var userStore = useUserStore()
+    if (userStore.accessToken !== null) {
+      config.headers['Authorization'] = 'Bearer ' + userStore.accessToken
+    }
+    return config
+  },
+  (error) => {
+    console.log(error)
+    Promise.reject(error)
+  }
+)
 
 // 响应拦截器
 service.interceptors.response.use(

@@ -83,13 +83,17 @@ const userStore = useUserStore()
 const router = useRouter()
 const loginHandler = () => {
   //参数校验
-  loginFromRef.value.validate((valid) => {
+  loginFromRef.value.validate(async (valid) => {
     if (!valid) return
     loading.value = true
     //校验通过 进行登录
-    userStore.getToken(loginForm.value.username, loginForm.value.password)
-    loading.value = false
-    router.push('/')
+    try {
+      const token = await userStore.getToken(loginForm.value.username, loginForm.value.password)
+      loading.value = false
+      router.push('/')
+    } catch (error) {
+      loading.value = false
+    }
   })
 }
 </script>
