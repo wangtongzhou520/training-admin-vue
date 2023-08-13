@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper">
+  <div class="app-wrapper" :class="[systemStore.sidebarOpened ? 'openSidebar' : 'hideSidebar']">
     <!-- 左侧 menu -->
     <Sidebar class="sidebar-container" :style="{ backgroundColor: variables.menuBg }" />
     <div class="main-container">
@@ -18,6 +18,8 @@ import Navbar from './components/Navbar.vue'
 import Sidebar from './components/sidebar/index.vue'
 import AppMain from './components/AppMain.vue'
 import variables from '@/styles/variables.module.scss'
+import { systemUseStore } from '@/stores/system'
+const systemStore = systemUseStore()
 </script>
 
 <style lang="scss" scoped>
@@ -36,5 +38,10 @@ import variables from '@/styles/variables.module.scss'
   right: 0;
   z-index: 9;
   width: calc(100% - #{$sideBarWidth});
+  transition: $sideBarDuration;
+}
+
+.hideSidebar .fixed-header {
+  width: calc(100% - #{$hideSideBarWidth});
 }
 </style>

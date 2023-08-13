@@ -9,16 +9,17 @@
     />
     <!-- 内部图标 -->
     <svg v-else class="svg-icon" :class="className" aria-hidden="true">
-      <use :href="iconName" />
+      <use :xlink:href="iconName" />
     </svg>
   </div>
 </template>
 
 <script setup>
 import { isExternal as external } from '@/utils/validate'
-import { computed } from 'vue'
+import { defineProps, computed } from 'vue'
 
 const props = defineProps({
+  // icon 图标
   icon: {
     type: String,
     required: true
@@ -46,7 +47,7 @@ const styleExternalIcon = computed(() => ({
 }))
 
 /**
- * elment icon
+ * 项目内图标
  */
 const iconName = computed(() => `#icon-${props.icon}`)
 </script>

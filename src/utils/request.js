@@ -9,7 +9,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   (config) => {
-    var userStore = useUserStore()
+    const userStore = useUserStore()
     if (userStore.accessToken !== null) {
       config.headers['Authorization'] = 'Bearer ' + userStore.accessToken
     }
@@ -24,6 +24,7 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
+    console.log(response.data)
     const { state, message, data } = response.data
     //   要根据success的成功与否决定下面的操作
     if (state) {
@@ -35,8 +36,13 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    // TODO: 将来处理 token 超时问题
-    ElMessage.error(error.message) // 提示错误信息
+    const userStore = useUserStore()
+    //401 token过期
+    if (error.response && error.response.data && error.response.data.code === 401) {
+      userStore.logout()
+    }
+    //提示错误信息
+    ElMessage.error(error.message)
     return Promise.reject(error)
   }
 )

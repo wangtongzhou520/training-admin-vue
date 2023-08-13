@@ -3,6 +3,9 @@ import { getUserInfo } from '@/api/user'
 import { defineStore } from 'pinia'
 import { TOKEN } from '@/constant'
 import { ref } from 'vue'
+import { removeAllItem } from '@/utils/storage'
+import router from '@/router'
+import variables from '@/styles/variables.module.scss'
 
 export const useUserStore = defineStore(
   'user',
@@ -25,7 +28,15 @@ export const useUserStore = defineStore(
       }
       return await getUserInfo(params)
     }
-    return { accessToken, refreshToken, userId, getToken, userInfo }
+    const logout = () => {
+      accessToken.value = null
+      refreshToken.value = null
+      removeAllItem()
+      //TODO 待补充权限部分内容
+      router.push('login')
+    }
+    const style = variables
+    return { accessToken, refreshToken, userId, getToken, userInfo, logout, style }
   },
   {
     persist: {
