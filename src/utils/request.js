@@ -24,7 +24,6 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
-    console.log(response.data)
     const { state, message, data } = response.data
     //   要根据success的成功与否决定下面的操作
     if (state) {

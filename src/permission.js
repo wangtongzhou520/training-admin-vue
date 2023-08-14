@@ -12,7 +12,6 @@ router.beforeEach(async (to, from, next) => {
       next('/')
     } else {
       const result = await userStore.userInfo(userStore.userId)
-      console.log(JSON.stringify(result))
       next()
     }
   } else {

@@ -2,9 +2,9 @@
   <el-menu
     :collapse="!systemStore.sidebarOpened"
     :default-active="activeMenu"
-    :active-text-color="useStore.style.ActiveText"
-    :background-color="useStore.style.menuBg"
-    :text-color="useStore.style.menuText"
+    :active-text-color="systemStore.userStyle.ActiveText"
+    :background-color="systemStore.userStyle.menuBg"
+    :text-color="systemStore.userStyle.menuText"
     router
   >
     <sidebar-item v-for="item in menus" :key="item.path" :route="item"></sidebar-item>
@@ -18,11 +18,9 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { filterRouters, getMenus } from '@/utils/route.js'
 import SidebarItem from './SidebarItem.vue'
-import { useUserStore } from '@/stores/user'
 import { systemUseStore } from '@/stores/system'
 
 const router = useRouter()
-const useStore = useUserStore()
 const systemStore = systemUseStore()
 
 const menus = computed(() => {

@@ -35,8 +35,7 @@ export const useUserStore = defineStore(
       //TODO 待补充权限部分内容
       router.push('login')
     }
-    const style = variables
-    return { accessToken, refreshToken, userId, getToken, userInfo, logout, style }
+    return { accessToken, refreshToken, userId, getToken, userInfo, logout }
   },
   {
     persist: {

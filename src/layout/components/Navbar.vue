@@ -1,6 +1,9 @@
 <template>
   <div class="navbar">
+    <!-- 汉堡 -->
     <hamburger class="hamburger-container" />
+    <!-- 面包屑 -->
+    <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
       <!-- 头像 -->
