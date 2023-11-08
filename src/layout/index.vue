@@ -10,6 +10,9 @@
       <!-- 内容区 -->
       <AppMain />
     </div>
+    <h1 class="logo-title">
+      {{ $t('msg.test') }}
+    </h1>
   </div>
 </template>
 
@@ -19,6 +22,9 @@ import Sidebar from './components/sidebar/index.vue'
 import AppMain from './components/AppMain.vue'
 import variables from '@/styles/variables.module.scss'
 import { systemUseStore } from '@/stores/system'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
+
 const systemStore = systemUseStore()
 </script>
 

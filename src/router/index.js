@@ -32,7 +32,7 @@ const privateRoutes = [
 const publicRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/index')
+    component: () => import('@/views/login/index.vue')
   },
   {
     path: '/',
