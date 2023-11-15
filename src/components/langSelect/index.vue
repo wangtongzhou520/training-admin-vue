@@ -15,9 +15,9 @@
 </template>
 
 <script setup>
-import { langSelectStore } from '@/stores/langSelect'
 import { useI18n } from 'vue-i18n'
 import { defineProps, computed } from 'vue'
+import { langSelectStore } from '@/stores/langSelect'
 import { ElMessage } from 'element-plus'
 
 defineProps({
@@ -30,15 +30,14 @@ defineProps({
     }
   }
 })
-
-const langSelect = langSelectStore()
-const language = computed(() => langSelect.language)
-
 // 切换语言的方法
 const i18n = useI18n()
+const langStore = langSelectStore()
+const language = computed(() => langStore.language)
+
 const handleSetLanguage = (lang) => {
   i18n.locale.value = lang
-  langSelect.language = lang
+  langStore.changeLanguage(lang)
   ElMessage.success('更新成功')
 }
 </script>
