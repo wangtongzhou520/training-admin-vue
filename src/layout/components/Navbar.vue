@@ -6,7 +6,6 @@
     <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
-      <lang-select class="right-menu-item hover-effect"></lang-select>
       <!-- 头像 -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -36,7 +35,6 @@
 <script setup>
 import { useUserStore } from '@/stores/user'
 import Hamburger from '@/components/hamburger/index.vue'
-import LangSelect from '@/components/langSelect/index.vue'
 
 const userStore = useUserStore()
 

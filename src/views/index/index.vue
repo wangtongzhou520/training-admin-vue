@@ -1,7 +1,11 @@
-<template>首页</template>
+<template>
+  <div>
+    <Personal></Personal>
+  </div>
+</template>
 
-<script>
-export default {}
+<script setup>
+import Personal from '@/views/personal/index.vue'
 </script>
 
-<style></style>
+<style lang="scss" scoped></style>

@@ -1,7 +1,5 @@
 <template>用户</template>
 
-<script>
-export default {}
-</script>
+<script setup></script>
 
-<style></style>
+<style lang="scss" scoped></style>
