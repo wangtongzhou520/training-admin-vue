@@ -1,4 +1,6 @@
-<template>用户</template>
+<template>
+  <div>用户</div>
+</template>
 
 <script setup></script>
 

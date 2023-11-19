@@ -20,12 +20,31 @@ export const systemUseStore = defineStore(
         tagsViewList.value.push(tag)
       }
     }
+    //删除视图标签
+    const removeTagsView = (type, index) => {
+      if (type === 'index') {
+        tagsViewList.value.splice(index, 1)
+        return
+      } else if (type === 'other') {
+        tagsViewList.value.splice(index + 1, tagsViewList.value.length - index + 1)
+        tagsViewList.value.splice(0, index)
+      } else if (type === 'right') {
+        tagsViewList.value.splice(index + 1, tagsViewList.value.length - index + 1)
+      }
+    }
 
     const triggerSidebarOpened = (state) => {
       sidebarOpened.value = !state
     }
     const userStyle = variables
-    return { sidebarOpened, triggerSidebarOpened, userStyle, tagsViewList, addTagsViewList }
+    return {
+      sidebarOpened,
+      triggerSidebarOpened,
+      userStyle,
+      tagsViewList,
+      addTagsViewList,
+      removeTagsView
+    }
   },
   {
     persist: {
