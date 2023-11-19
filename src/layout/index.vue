@@ -6,6 +6,8 @@
       <div class="fixed-header">
         <!-- 顶部的 navbar -->
         <Navbar />
+        <!-- tags -->
+        <tags-view></tags-view>
       </div>
       <!-- 内容区 -->
       <AppMain />
@@ -17,6 +19,7 @@
 import Navbar from './components/Navbar.vue'
 import Sidebar from './components/sidebar/index.vue'
 import AppMain from './components/AppMain.vue'
+import TagsView from './components/TagsView/index.vue'
 import variables from '@/styles/variables.module.scss'
 import { systemUseStore } from '@/stores/system'
 

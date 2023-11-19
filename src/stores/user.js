@@ -5,7 +5,6 @@ import { TOKEN } from '@/constant'
 import { ref } from 'vue'
 import { removeAllItem } from '@/utils/storage'
 import router from '@/router'
-import variables from '@/styles/variables.module.scss'
 
 export const useUserStore = defineStore(
   'user',

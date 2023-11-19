@@ -4,9 +4,6 @@
 export const TOKEN = 'training_token'
 
 /**
- * token 时间戳
+ * 标签视图
  */
-
-/**
- * 超时时长
- */
+export const TAGS_VIEW = 'tagsView'
