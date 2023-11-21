@@ -1,10 +1,10 @@
 <template>
   <div class="my-container">
     <el-row>
-      <el-col :span="6">
+      <el-col :span="8">
         <project-card class="user-card"></project-card>
       </el-col>
-      <el-col :span="18">
+      <el-col :span="16">
         <el-card>
           <el-tabs v-model="activeName">
             <el-tab-pane label="功能" name="feature">
