@@ -7,3 +7,11 @@ export const getUserInfo = (params) => {
     params
   })
 }
+
+export const pageUserInfo = (data) => {
+  return request({
+    url: '/sys/user/page',
+    method: 'POST',
+    data
+  })
+}
