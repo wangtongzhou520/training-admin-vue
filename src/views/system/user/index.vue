@@ -26,12 +26,16 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="gmtCreate" label="创建时间"> </el-table-column>
+        <el-table-column prop="gmtCreate" label="创建时间">
+          <template #default="{ row }">
+            {{ $filters.dateFilter(row.gmtCreate) }}
+          </template>
+        </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
-          <template #default>
-            <el-button type="primary">查看</el-button>
-            <el-button type="info">角色</el-button>
-            <el-button type="danger">删除</el-button>
+          <template #default="{ row }">
+            <el-button type="primary" size="small">查看</el-button>
+            <el-button type="info" size="small">角色</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -53,7 +57,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { pageUserInfo } from '@/api/user'
+import { pageUserInfo, deleteUser } from '@/api/user'
 
 const tableData = ref([])
 const total = ref(0)
@@ -88,6 +92,20 @@ const handleSizeChange = (currentSize) => {
 const handleCurrentChange = (currentPage) => {
   page.value = currentPage
   getListData()
+}
+
+/**
+ * 删除
+ */
+const handleDelete = (row) => {
+  ElMessageBox.confirm('您确定删除' + row.username + '该用户信息', {
+    type: 'warning'
+  }).then(async () => {
+    await deleteUser(row.id)
+    ElMessage.success('删除成功')
+    // 重新渲染数据
+    getListData()
+  })
 }
 </script>
 

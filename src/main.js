@@ -9,8 +9,10 @@ import svg from '@/components/svg/index.vue'
 import 'element-plus/dist/index.css'
 import './permission'
 import i18n from '@/i18n'
+import installFilter from '@/filter'
 
 const app = createApp(App)
+installFilter(app)
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersist)

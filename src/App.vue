@@ -7,7 +7,6 @@
 <script setup>
 import { ElConfigProvider } from 'element-plus'
 import { langSelectStore } from '@/stores/langSelect'
-
 const langSelect = langSelectStore()
 </script>
 
