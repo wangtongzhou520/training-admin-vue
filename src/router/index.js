@@ -29,6 +29,14 @@ const privateRoutes = [
           title: '角色管理',
           icon: 'role'
         }
+      },
+      {
+        path: '/menu/manage',
+        component: () => import('@/views/system/menu/index.vue'),
+        meta: {
+          title: '菜单管理',
+          icon: 'menu'
+        }
       }
     ]
   }
