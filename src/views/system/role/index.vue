@@ -2,8 +2,17 @@
   <div class="user-manage-container">
     <el-card class="header">
       <div>
-        <el-button type="primary">导入数据</el-button>
-        <el-button type="success"> 导出数据 </el-button>
+        <el-form :inline="true" :model="queryParams" class="demo-form-inline">
+          <el-form-item label="角色名称" prop="name">
+            <el-input v-model="queryParams.name" clearable placeholder="请输入菜单名称" />
+          </el-form-item>
+          <el-form-item label="角色标识" prop="code">
+            <el-input v-model="queryParams.code" clearable placeholder="请输入菜单名称" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </el-card>
     <el-card>
@@ -27,8 +36,8 @@
 
       <el-pagination
         class="pagination"
-        v-model:current-page="page"
-        v-model:page-size="size"
+        v-model:current-page="queryParams.pageNo"
+        v-model:page-size="queryParams.pageSize"
         :page-sizes="[10, 20]"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -41,26 +50,34 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { pageRoleList } from '@/api/role'
 
+/**
+ * 列表内容
+ */
 const tableData = ref([])
+/**
+ * 总数
+ */
 const total = ref(0)
-const page = ref(1)
-const size = ref(10)
+
+/**
+ * 查询参数
+ */
+const queryParams = reactive({
+  name: undefined,
+  code: undefined,
+  pageNo: 1,
+  pageSize: 10
+})
 
 // 获取数据的方法
 const getListData = async () => {
-  const result = await pageRoleList({
-    name: null,
-    type: null,
-    pageNo: page.value,
-    pageSize: size.value
-  })
+  const result = await pageRoleList(queryParams)
   tableData.value = result.list
   total.value = result.total
 }
-getListData()
 
 // 分页相关
 /**
@@ -91,6 +108,17 @@ const handleDelete = (row) => {
     getListData()
   })
 }
+/**
+ * 查询
+ */
+const onSubmit = () => {
+  getListData()
+}
+
+/** 初始化 **/
+onMounted(() => {
+  getListData()
+})
 </script>
 
 <style lang="scss" scoped>

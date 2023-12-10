@@ -5,7 +5,6 @@
  */
 export const tranListToTreeData = (arr, pid = 0) => {
   let newArr = []
-  console.log(arr)
   //循环数组
   arr.forEach((item, i) => {
     //判断pid与遍历元素中pid相同的数据，相等的为同级数据，追加到该级数组中
