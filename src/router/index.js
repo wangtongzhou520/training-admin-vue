@@ -35,7 +35,7 @@ const privateRoutes = [
         component: () => import('@/views/system/menu/index.vue'),
         meta: {
           title: '菜单管理',
-          icon: 'menu'
+          icon: 'permission'
         }
       }
     ]
