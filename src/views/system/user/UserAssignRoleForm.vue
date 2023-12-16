@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, watch } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 import { roleList } from '@/api/role'
 import { userRoleList, addUserRole } from '@/api/permission'
 
@@ -62,8 +62,8 @@ const emits = defineEmits(['update:modelValue'])
  * 确定
  */
 const onConfirm = async () => {
-  console.log(formData)
   await addUserRole(formData)
+  emits('update:modelValue', false)
 }
 
 /**

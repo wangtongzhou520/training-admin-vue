@@ -28,3 +28,25 @@ export const deleteUser = (id) => {
     method: 'DELETE'
   })
 }
+
+/**
+ * 新增用户
+ */
+export const addUser = (data) => {
+  return request({
+    url: `/sys/user`,
+    method: 'POST',
+    data
+  })
+}
+
+/**
+ * 修改用户
+ */
+export const modifyUser = (data) => {
+  return request({
+    url: `/sys/user`,
+    method: 'PUT',
+    data
+  })
+}

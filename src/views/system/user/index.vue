@@ -10,7 +10,10 @@
             <el-input v-model="queryParams.telephone" clearable placeholder="请输入菜单名称" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button type="primary" @click="onSearchClick">查询</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="success" @click="onAddRoleClick">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -20,6 +23,7 @@
         <el-table-column label="#" type="index" />
         <el-table-column prop="username" label="姓名"> </el-table-column>
         <el-table-column prop="telephone" label="电话"> </el-table-column>
+        <el-table-column prop="mail" label="邮箱"> </el-table-column>
         <el-table-column label="头像" align="center">
           <template v-slot="{ row }">
             <el-image class="avatar" :src="row.avatar" :preview-src-list="[row.avatar]"></el-image>
@@ -42,9 +46,16 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="primary" size="small" @click="onShowRoleClick(row)">查看</el-button>
-            <el-button type="info" size="small" @click="onAddRoleClick(row)">分配角色</el-button>
-            <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
+            <el-button type="success" size="small" link @click="onUserModifyClick(row)"
+              >编辑</el-button
+            >
+            <el-button type="primary" size="small" link @click="onShowRoleClick(row)"
+              >查看角色</el-button
+            >
+            <el-button type="info" size="small" link @click="onUserAssignRoleClick(row)"
+              >分配角色</el-button
+            >
+            <el-button type="danger" size="small" link @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -62,6 +73,7 @@
       </el-pagination>
     </el-card>
     <roles-dialog v-model="roleDialogVisible" :selectRow="selectRow"></roles-dialog>
+    <user-dialog v-model="userFormVisible" :selectRow="selectRow"></user-dialog>
   </div>
 </template>
 
@@ -69,6 +81,7 @@
 import { ref, reactive } from 'vue'
 import { pageUserInfo, deleteUser } from '@/api/user'
 import RolesDialog from '../user/UserAssignRoleForm.vue'
+import UserDialog from '../user/UserFrom.vue'
 
 /**
  * 分页列表
@@ -78,6 +91,11 @@ const tableData = ref([])
  * 总数
  */
 const total = ref(0)
+
+/**
+ * 选中的数据
+ */
+const selectRow = ref({})
 
 /**
  * 查询参数
@@ -129,15 +147,31 @@ const handleDelete = (row) => {
 /**
  * 查询
  */
-const onSubmit = () => {
+const onSearchClick = () => {
   getListData()
+}
+
+/**
+ * 编辑用户
+ */
+const userFormVisible = ref(false)
+const onUserModifyClick = (row) => {
+  userFormVisible.value = true
+  selectRow.value = row
+}
+
+/**
+ * 新增用户
+ */
+const onAddRoleClick = () => {
+  userFormVisible.value = true
+  selectRow.value = {}
 }
 
 /**
  * 查看角色
  */
 const roleDialogVisible = ref(false)
-const selectRow = ref({})
 const onShowRoleClick = (row) => {
   roleDialogVisible.value = true
   selectRow.value = row
@@ -146,7 +180,7 @@ const onShowRoleClick = (row) => {
 /**
  * 添加角色
  */
-const onAddRoleClick = (row) => {
+const onUserAssignRoleClick = (row) => {
   roleDialogVisible.value = true
   selectRow.value = row
 }

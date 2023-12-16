@@ -28,7 +28,8 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="info" size="small">分配权限</el-button>
+            <el-button type="info" size="small">编辑角色</el-button>
+            <el-button type="primary" size="small">分配权限</el-button>
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
@@ -65,7 +66,7 @@ const total = ref(0)
 /**
  * 查询参数
  */
-const queryParams = ref({
+const queryParams = reactive({
   name: undefined,
   code: undefined,
   pageNo: 1,
