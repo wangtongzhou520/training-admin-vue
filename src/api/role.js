@@ -10,3 +10,15 @@ export const pageRoleList = (data) => {
     data
   })
 }
+
+/**
+ * 所有的角色信息
+ *
+ * @returns
+ */
+export const roleList = () => {
+  return request({
+    url: '/sys/role/all',
+    method: 'GET'
+  })
+}

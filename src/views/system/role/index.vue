@@ -65,7 +65,7 @@ const total = ref(0)
 /**
  * 查询参数
  */
-const queryParams = reactive({
+const queryParams = ref({
   name: undefined,
   code: undefined,
   pageNo: 1,

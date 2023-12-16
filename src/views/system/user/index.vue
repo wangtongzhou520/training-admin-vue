@@ -42,8 +42,8 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="primary" size="small">查看</el-button>
-            <el-button type="info" size="small">角色</el-button>
+            <el-button type="primary" size="small" @click="onShowRoleClick(row)">查看</el-button>
+            <el-button type="info" size="small" @click="onAddRoleClick(row)">分配角色</el-button>
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
@@ -61,12 +61,14 @@
       >
       </el-pagination>
     </el-card>
+    <roles-dialog v-model="roleDialogVisible" :selectRow="selectRow"></roles-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
 import { pageUserInfo, deleteUser } from '@/api/user'
+import RolesDialog from '../user/UserAssignRoleForm.vue'
 
 /**
  * 分页列表
@@ -94,7 +96,6 @@ const getListData = async () => {
   total.value = result.total
 }
 
-// 分页相关
 /**
  * size 改变触发
  */
@@ -130,6 +131,24 @@ const handleDelete = (row) => {
  */
 const onSubmit = () => {
   getListData()
+}
+
+/**
+ * 查看角色
+ */
+const roleDialogVisible = ref(false)
+const selectRow = ref({})
+const onShowRoleClick = (row) => {
+  roleDialogVisible.value = true
+  selectRow.value = row
+}
+
+/**
+ * 添加角色
+ */
+const onAddRoleClick = (row) => {
+  roleDialogVisible.value = true
+  selectRow.value = row
 }
 
 /** 初始化 **/

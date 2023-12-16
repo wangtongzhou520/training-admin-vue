@@ -60,7 +60,7 @@ const isExpandAll = ref(false)
 /**
  * 查询参数
  */
-const queryParams = reactive({
+const queryParams = ref({
   name: undefined,
   visible: undefined
 })
