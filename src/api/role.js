@@ -22,3 +22,31 @@ export const roleList = () => {
     method: 'GET'
   })
 }
+
+/**
+ * 新增用户
+ *
+ * @param {} data
+ * @returns
+ */
+export const addRole = (data) => {
+  return request({
+    url: '/sys/role',
+    method: 'POST',
+    data
+  })
+}
+
+/**
+ * 新增用户
+ *
+ * @param {} data
+ * @returns
+ */
+export const modifyRole = (data) => {
+  return request({
+    url: '/sys/role',
+    method: 'PUT',
+    data
+  })
+}

@@ -52,6 +52,7 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
 import { addUser, modifyUser } from '@/api/user'
+import { ElMessage } from 'element-plus'
 
 // /**
 //  * 所有部门信息
@@ -84,7 +85,7 @@ const props = defineProps({
     required: true
   }
 })
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'userAction'])
 
 /**
  * 打开回调
@@ -113,9 +114,12 @@ const closed = () => {
 const onConfirm = async () => {
   if (formData.id !== undefined) {
     await modifyUser(formData)
+    ElMessage.success('编辑用户成功')
   } else {
     await addUser(formData)
+    ElMessage.success('新增用户成功')
   }
+  emits('update:modelValue', false)
 }
 
 // // 获取部门信息

@@ -13,7 +13,7 @@
             <el-button type="primary" @click="onSearchClick">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="onAddRoleClick">新增</el-button>
+            <el-button type="success" @click="onAddUserClick">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -73,7 +73,11 @@
       </el-pagination>
     </el-card>
     <roles-dialog v-model="roleDialogVisible" :selectRow="selectRow"></roles-dialog>
-    <user-dialog v-model="userFormVisible" :selectRow="selectRow"></user-dialog>
+    <user-dialog
+      v-model="userFormVisible"
+      :selectRow="selectRow"
+      @userAction="getListData()"
+    ></user-dialog>
   </div>
 </template>
 
@@ -163,7 +167,7 @@ const onUserModifyClick = (row) => {
 /**
  * 新增用户
  */
-const onAddRoleClick = () => {
+const onAddUserClick = () => {
   userFormVisible.value = true
   selectRow.value = {}
 }

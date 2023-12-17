@@ -12,6 +12,9 @@
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
+          <el-form-item>
+            <el-button type="success" @click="onAddRoleClick">新增</el-button>
+          </el-form-item>
         </el-form>
       </div>
     </el-card>
@@ -28,7 +31,7 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="info" size="small">编辑角色</el-button>
+            <el-button type="info" size="small" @click="onRoleModifyClick(row)">编辑角色</el-button>
             <el-button type="primary" size="small">分配权限</el-button>
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
@@ -47,12 +50,18 @@
       >
       </el-pagination>
     </el-card>
+    <role-dialog
+      v-model="roleFormVisible"
+      :selectRow="selectRow"
+      @roleAction="getListData()"
+    ></role-dialog>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
 import { pageRoleList } from '@/api/role'
+import RoleDialog from '../role/RoleFrom.vue'
 
 /**
  * 列表内容
@@ -62,6 +71,11 @@ const tableData = ref([])
  * 总数
  */
 const total = ref(0)
+
+/**
+ * 选中的数据
+ */
+const selectRow = ref({})
 
 /**
  * 查询参数
@@ -78,6 +92,23 @@ const getListData = async () => {
   const result = await pageRoleList(queryParams)
   tableData.value = result.list
   total.value = result.total
+}
+
+/**
+ * 编辑角色
+ */
+const roleFormVisible = ref(false)
+const onRoleModifyClick = (row) => {
+  roleFormVisible.value = true
+  selectRow.value = row
+}
+
+/**
+ * 新增角色
+ */
+const onAddRoleClick = () => {
+  roleFormVisible.value = true
+  selectRow.value = {}
 }
 
 // 分页相关
