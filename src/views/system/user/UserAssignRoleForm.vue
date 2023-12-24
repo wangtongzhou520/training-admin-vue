@@ -28,6 +28,7 @@
 import { defineProps, defineEmits } from 'vue'
 import { roleList } from '@/api/role'
 import { userRoleList, addUserRole } from '@/api/permission'
+import { ElMessage } from 'element-plus'
 
 /**
  * 所有角色
@@ -64,6 +65,7 @@ const emits = defineEmits(['update:modelValue'])
 const onConfirm = async () => {
   await addUserRole(formData)
   emits('update:modelValue', false)
+  ElMessage.success('添加角色成功')
 }
 
 /**

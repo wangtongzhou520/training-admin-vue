@@ -32,7 +32,9 @@
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
             <el-button type="info" size="small" @click="onRoleModifyClick(row)">编辑角色</el-button>
-            <el-button type="primary" size="small">分配权限</el-button>
+            <el-button type="primary" size="small" @click="onRoleAssignMenuClick(row)"
+              >分配权限</el-button
+            >
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
@@ -55,6 +57,7 @@
       :selectRow="selectRow"
       @roleAction="getListData()"
     ></role-dialog>
+    <menu-dialog v-model="menuFormVisible" :selectRow="selectRow"></menu-dialog>
   </div>
 </template>
 
@@ -62,6 +65,7 @@
 import { ref, reactive } from 'vue'
 import { pageRoleList } from '@/api/role'
 import RoleDialog from '../role/RoleFrom.vue'
+import MenuDialog from '../role/RoleAssignMenuForm.vue'
 
 /**
  * 列表内容
@@ -109,6 +113,15 @@ const onRoleModifyClick = (row) => {
 const onAddRoleClick = () => {
   roleFormVisible.value = true
   selectRow.value = {}
+}
+
+/**
+ * 分配权限
+ */
+const menuFormVisible = ref(false)
+const onRoleAssignMenuClick = (row) => {
+  menuFormVisible.value = true
+  selectRow.value = row
 }
 
 // 分页相关

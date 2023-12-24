@@ -22,3 +22,11 @@ export const tranListToTreeData = (arr, pid = 0) => {
   })
   return newArr
 }
+
+/**
+ * 默认展示
+ */
+export const defaultProps = {
+  children: 'children',
+  label: 'name'
+}
