@@ -41,3 +41,15 @@ export const addRoleMenu = (data) => {
     data
   })
 }
+
+/**
+ * 获取用户权限信息
+ *
+ * @returns
+ */
+export const getUserPermission = () => {
+  return request({
+    url: `/sys/auth/getUserPermission`,
+    method: 'GET'
+  })
+}

@@ -1,5 +1,5 @@
 import { login } from '@/api/login'
-import { getUserInfo } from '@/api/user'
+import { getUserPermission } from '@/api/permission'
 import { defineStore } from 'pinia'
 import { TOKEN } from '@/constant'
 import { ref } from 'vue'
@@ -12,6 +12,7 @@ export const useUserStore = defineStore(
     const accessToken = ref(null)
     const refreshToken = ref(null)
     const userId = ref(null)
+    const userInfo = ref(null)
     const getToken = async (username, password) => {
       const result = await login({
         username,
@@ -21,11 +22,9 @@ export const useUserStore = defineStore(
       accessToken.value = result.accessToken
       userId.value = result.userId
     }
-    const userInfo = async (userId) => {
-      let params = {
-        id: userId
-      }
-      return await getUserInfo(params)
+    const getUserInfo = async () => {
+      userInfo.value = await getUserPermission()
+      return userInfo.value
     }
     const logout = () => {
       accessToken.value = null
@@ -34,7 +33,7 @@ export const useUserStore = defineStore(
       //TODO 待补充权限部分内容
       router.push('login')
     }
-    return { accessToken, refreshToken, userId, getToken, userInfo, logout }
+    return { accessToken, refreshToken, userId, getToken, userInfo, logout, getUserInfo }
   },
   {
     persist: {
