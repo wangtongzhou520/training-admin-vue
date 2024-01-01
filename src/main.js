@@ -10,11 +10,13 @@ import 'element-plus/dist/index.css'
 import './permission'
 import i18n from '@/i18n'
 import installFilter from '@/filter'
+import installDirective from '@/directives'
 import { useUserStore } from '@/stores/user'
 import { usePermissionStore } from '@/stores/permission'
 
 const app = createApp(App)
 installFilter(app)
+installDirective(app)
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersist)

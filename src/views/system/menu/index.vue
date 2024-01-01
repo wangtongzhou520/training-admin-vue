@@ -30,7 +30,7 @@
         <!-- <el-table-column prop="type" label="菜单类型"> </el-table-column> -->
         <el-table-column prop="path" label="路由地址"> </el-table-column>
         <el-table-column prop="component" label="组件路径"> </el-table-column>
-        <el-table-column prop="componentName" label="组件地址"> </el-table-column>
+        <el-table-column prop="componentName" label="组件名称"> </el-table-column>
         <el-table-column prop="permission" label="权限标识"> </el-table-column>
         <el-table-column prop="sort" label="排序顺序"> </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">

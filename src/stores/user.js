@@ -29,8 +29,8 @@ export const useUserStore = defineStore(
     const logout = () => {
       accessToken.value = null
       refreshToken.value = null
+      userInfo.value = null
       removeAllItem()
-      //TODO 待补充权限部分内容
       router.push('login')
     }
     return { accessToken, refreshToken, userId, getToken, userInfo, logout, getUserInfo }

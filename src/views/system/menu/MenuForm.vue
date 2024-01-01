@@ -96,6 +96,8 @@ const emits = defineEmits(['update:modelValue', 'menuAction'])
  * 打开回调
  */
 const open = async () => {
+  menuTree.value = []
+  getMeanTree()
   //初始化表单
   formData.id = props.selectRow.id
   formData.parentId = props.selectRow.parentId
@@ -146,10 +148,10 @@ const onConfirm = async () => {
   emits('menuAction')
 }
 
-/** 初始化 **/
-onMounted(() => {
-  getMeanTree()
-})
+// /** 初始化 **/
+// onMounted(() => {
+//   getMeanTree()
+// })
 </script>
 
 <style lang="scss" scoped></style>

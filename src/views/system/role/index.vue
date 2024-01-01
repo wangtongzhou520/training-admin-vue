@@ -32,7 +32,11 @@
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
             <el-button type="info" size="small" @click="onRoleModifyClick(row)">编辑角色</el-button>
-            <el-button type="primary" size="small" @click="onRoleAssignMenuClick(row)"
+            <el-button
+              type="primary"
+              size="small"
+              @click="onRoleAssignMenuClick(row)"
+              v-permission="['sys:permission:role-menu']"
               >分配权限</el-button
             >
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
