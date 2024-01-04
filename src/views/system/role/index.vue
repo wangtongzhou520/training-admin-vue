@@ -22,7 +22,7 @@
       <el-table :data="tableData" border style="width: 100%">
         <el-table-column label="#" type="index" />
         <el-table-column prop="name" label="角色名称"> </el-table-column>
-        <el-table-column prop="type" label="角色类型"> </el-table-column>
+        <el-table-column prop="type" label="角色类型" :formatter="formatType"> </el-table-column>
         <el-table-column prop="code" label="角色code"> </el-table-column>
         <el-table-column prop="gmtCreate" label="创建时间">
           <template #default="{ row }">
@@ -70,6 +70,7 @@ import { ref, reactive } from 'vue'
 import { pageRoleList } from '@/api/role'
 import RoleDialog from '../role/RoleFrom.vue'
 import MenuDialog from '../role/RoleAssignMenuForm.vue'
+import { roleTypeList } from '@/constant/role'
 
 /**
  * 列表内容
@@ -162,6 +163,11 @@ const handleDelete = (row) => {
  */
 const onSubmit = () => {
   getListData()
+}
+
+const formatType = (row) => {
+  var item = roleTypeList.find((item) => item.value === row.type)
+  return item?.label
 }
 
 /** 初始化 **/

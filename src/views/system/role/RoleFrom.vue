@@ -7,15 +7,15 @@
       <el-form-item label="角色标识" prop="code">
         <el-input v-model="formData.code" placeholder="请输入角色标识" />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <!-- <el-select v-model="formData.status" clearable placeholder="请选择状态">
+      <el-form-item label="角色类型" placeholder="请选择">
+        <el-select v-model="formData.type" placeholder="请选择角色类型">
           <el-option
-            v-for="dict in getIntDictOptions(DICT_TYPE.COMMON_STATUS)"
+            v-for="dict in roleTypeList"
             :key="dict.value"
             :label="dict.label"
             :value="dict.value"
           />
-        </el-select> -->
+        </el-select>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input v-model="formData.remark" placeholder="请输备注" type="textarea" />
@@ -34,11 +34,13 @@
 import { defineProps, defineEmits } from 'vue'
 import { addRole, modifyRole } from '@/api/role'
 import { ElMessage } from 'element-plus'
+import { roleTypeList } from '@/constant/role'
 
 // /**
 //  * 所有部门信息
 //  */
 // const allDeptList = ref([])
+
 const title = ref('新增角色')
 /**
  * 表单内容
@@ -74,7 +76,7 @@ const open = async () => {
   formData.id = props.selectRow.id
   formData.name = props.selectRow.name
   formData.code = props.selectRow.code
-  formData.type = 0
+  formData.type = props.selectRow.type
   formData.remark = props.selectRow.remark
   title.value = formData.id !== undefined ? '编辑角色' : '新增角色'
 }

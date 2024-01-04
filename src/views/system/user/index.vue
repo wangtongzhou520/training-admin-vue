@@ -52,7 +52,12 @@
             <el-button type="primary" size="small" link @click="onShowRoleClick(row)"
               >查看角色</el-button
             >
-            <el-button type="info" size="small" link @click="onUserAssignRoleClick(row)"
+            <el-button
+              type="info"
+              size="small"
+              link
+              @click="onUserAssignRoleClick(row)"
+              v-permission="['sys:permission:user-role']"
               >分配角色</el-button
             >
             <el-button type="danger" size="small" link @click="handleDelete(row)">删除</el-button>
