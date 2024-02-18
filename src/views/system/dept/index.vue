@@ -3,11 +3,8 @@
     <el-card class="header">
       <div>
         <el-form ref="queryFormRef" :inline="true" :model="queryParams" class="demo-form-inline">
-          <el-form-item label="菜单名称" prop="name">
-            <el-input v-model="queryParams.name" clearable placeholder="请输入菜单名称" />
-          </el-form-item>
-          <el-form-item label="状态" prop="visible">
-            <el-input v-model="queryParams.visible" clearable placeholder="请输入菜单名称" />
+          <el-form-item label="部门名称" prop="name">
+            <el-input v-model="queryParams.name" clearable placeholder="请输入部门名称" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="onSearch">查询</el-button>
@@ -26,34 +23,36 @@
         :default-expand-all="isExpandAll"
         row-key="id"
       >
-        <el-table-column prop="name" label="菜单名称"> </el-table-column>
-        <!-- <el-table-column prop="type" label="菜单类型"> </el-table-column> -->
-        <el-table-column prop="path" label="路由地址"> </el-table-column>
-        <el-table-column prop="component" label="组件路径"> </el-table-column>
-        <el-table-column prop="componentName" label="组件名称"> </el-table-column>
-        <el-table-column prop="permission" label="权限标识"> </el-table-column>
-        <el-table-column prop="sort" label="排序顺序"> </el-table-column>
+        <el-table-column prop="name" label="部门名称"> </el-table-column>
+        <el-table-column prop="manageName" label="负责人"> </el-table-column>
+        <el-table-column prop="seq" label="排序顺序"> </el-table-column>
+        <el-table-column prop="deleteState" label="删除状态" :formatter="formatType">
+          <!-- <template #default="scope">
+            <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
+          </template> -->
+        </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="info" size="small" @click="onMenuModifyClick(row)">编辑权限</el-button>
+            <el-button type="info" size="small" @click="onMenuModifyClick(row)">编辑部门</el-button>
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <menu-dialog
+      <dept-dialog
         v-model="menuFormVisible"
         :selectRow="selectRow"
-        @menuAction="getListData()"
-      ></menu-dialog>
+        @deptAction="getListData()"
+      ></dept-dialog>
     </el-card>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { menuList } from '@/api/menu'
+import { deptList } from '@/api/dept'
+import { deleteStateTypeList } from '@/constant/dept'
 import { tranListToTreeData } from '@/utils/tree.js'
-import MenuDialog from '../menu/MenuForm.vue'
+import DeptDialog from '../dept/DeptForm.vue'
 
 /**
  * 返回结果
@@ -62,7 +61,7 @@ const tableData = ref([])
 /**
  * 是否展开
  */
-const isExpandAll = ref(false)
+const isExpandAll = ref(true)
 /**
  * 选中的数据
  */
@@ -78,7 +77,7 @@ const queryParams = reactive({
 
 // 获取数据的方法
 const getListData = async () => {
-  const result = await menuList(queryParams)
+  const result = await deptList(queryParams)
   tableData.value = tranListToTreeData(result)
 }
 
@@ -86,7 +85,7 @@ const getListData = async () => {
  * 删除
  */
 const handleDelete = (row) => {
-  ElMessageBox.confirm('您确定删除' + row.name + '该菜单信息', {
+  ElMessageBox.confirm('您确定删除' + row.name + '该部门信息', {
     type: 'warning'
   }).then(async () => {
     ElMessage.success('删除成功')
@@ -110,6 +109,11 @@ const onMenuModifyClick = (row) => {
 const onAddMenuClick = () => {
   menuFormVisible.value = true
   selectRow.value = {}
+}
+
+const formatType = (row) => {
+  var item = deleteStateTypeList.find((item) => item.value === row.deleteState)
+  return item?.label
 }
 
 /**

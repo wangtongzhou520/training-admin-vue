@@ -1,10 +1,9 @@
 import request from '@/utils/request'
 
-export const getUserInfo = (params) => {
+export const getUserInfo = (id) => {
   return request({
-    url: '/sys/getUserInfo',
-    method: 'GET',
-    params
+    url: `/sys/getUserInfo?id=${id}`,
+    method: 'GET'
   })
 }
 

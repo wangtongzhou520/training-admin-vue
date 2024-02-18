@@ -21,7 +21,6 @@ router.beforeEach(async (to, from, next) => {
         })
         return next(to.path)
       } else {
-        console.log(router.getRoutes())
         next()
       }
     }
