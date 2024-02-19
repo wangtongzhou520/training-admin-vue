@@ -41,3 +41,13 @@ export const modifyDept = (data) => {
     data
   })
 }
+
+/**
+ * 删除指定数据
+ */
+export const deleteDept = (id) => {
+  return request({
+    url: `/sys/dept/${id}`,
+    method: 'DELETE'
+  })
+}

@@ -8,15 +8,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="部门">
-            <!-- <el-tree-select
+          <el-form-item label="部门" prop="deptId">
+            <el-tree-select
               v-model="formData.deptId"
-              :data="deptList"
+              :data="deptData"
               :props="defaultProps"
               check-strictly
               node-key="id"
               placeholder="请选择归属部门"
-            /> -->
+            />
           </el-form-item>
         </el-col>
       </el-row>
@@ -52,12 +52,15 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
 import { addUser, modifyUser } from '@/api/user'
+import { deptList } from '@/api/dept'
 import { ElMessage } from 'element-plus'
+import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
 
-// /**
-//  * 所有部门信息
-//  */
-// const allDeptList = ref([])
+/**
+ * 部门
+ */
+const deptData = ref([])
+
 const title = ref('新增用户')
 /**
  * 表单内容
@@ -96,9 +99,10 @@ const open = async () => {
   formData.username = props.selectRow.username
   formData.telephone = props.selectRow.telephone
   formData.mail = props.selectRow.mail
-  formData.deptId = 1
+  formData.deptId = props.selectRow.deptId
   formData.remark = props.selectRow.remark
   title.value = formData.id !== undefined ? '编辑用户' : '新增用户'
+  getListData()
 }
 
 /**
@@ -120,12 +124,17 @@ const onConfirm = async () => {
     ElMessage.success('新增用户成功')
   }
   emits('update:modelValue', false)
+  emits('userAction')
 }
 
-// // 获取部门信息
-// const getListData = async () => {
-//   allDeptList.value = await deptList()
-// }
+// 获取部门信息
+const getListData = async () => {
+  const result = await deptList({
+    name: undefined,
+    visible: undefined
+  })
+  deptData.value = tranListToTreeData(result)
+}
 
 // /** 初始化 **/
 // onMounted(() => {

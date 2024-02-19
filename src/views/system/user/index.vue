@@ -29,7 +29,8 @@
             <el-image class="avatar" :src="row.avatar" :preview-src-list="[row.avatar]"></el-image>
           </template>
         </el-table-column>
-        <el-table-column label="角色">
+        <el-table-column prop="deptName" label="部门名称" align="center"> </el-table-column>
+        <!-- <el-table-column label="角色">
           <template #default="{ row }">
             <div v-if="row.role && row.role.length > 0">
               <el-tag v-for="item in row.role" :key="item.id" size="mini">{{ item.title }}</el-tag>
@@ -38,7 +39,7 @@
               <el-tag>其他</el-tag>
             </div>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="gmtCreate" label="创建时间">
           <template #default="{ row }">
             {{ $filters.dateFilter(row.gmtCreate) }}
@@ -46,21 +47,18 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="success" size="small" link @click="onUserModifyClick(row)"
-              >编辑</el-button
-            >
-            <el-button type="primary" size="small" link @click="onShowRoleClick(row)"
+            <el-button type="success" size="small" @click="onUserModifyClick(row)">编辑</el-button>
+            <!-- <el-button type="primary" size="small" @click="onShowRoleClick(row)"
               >查看角色</el-button
-            >
+            > -->
             <el-button
               type="info"
               size="small"
-              link
               @click="onUserAssignRoleClick(row)"
               v-permission="['sys:permission:user-role']"
               >分配角色</el-button
             >
-            <el-button type="danger" size="small" link @click="handleDelete(row)">删除</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
