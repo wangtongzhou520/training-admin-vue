@@ -6,9 +6,9 @@
           <el-form-item label="菜单名称" prop="name">
             <el-input v-model="queryParams.name" clearable placeholder="请输入菜单名称" />
           </el-form-item>
-          <el-form-item label="状态" prop="visible">
+          <!-- <el-form-item label="状态" prop="visible">
             <el-input v-model="queryParams.visible" clearable placeholder="请输入菜单名称" />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item>
             <el-button type="primary" @click="onSearch">查询</el-button>
           </el-form-item>
@@ -51,7 +51,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { menuList } from '@/api/menu'
+import { menuList, deleteMenu } from '@/api/menu'
 import { tranListToTreeData } from '@/utils/tree.js'
 import MenuDialog from '../menu/MenuForm.vue'
 
@@ -89,6 +89,7 @@ const handleDelete = (row) => {
   ElMessageBox.confirm('您确定删除' + row.name + '该菜单信息', {
     type: 'warning'
   }).then(async () => {
+    await deleteMenu(row.id)
     ElMessage.success('删除成功')
     // 重新渲染数据
     getListData()

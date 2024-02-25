@@ -76,6 +76,7 @@ const open = async () => {
   formData.userId = props.selectRow.id
   formData.username = props.selectRow.username
   formData.roleIds = await userRoleList(props.selectRow.id)
+  getListData()
 }
 
 /**

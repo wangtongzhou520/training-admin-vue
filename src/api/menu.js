@@ -22,7 +22,7 @@ export const menuList = (data) => {
  */
 export const addMenu = (data) => {
   return request({
-    url: '/sys/menu/',
+    url: '/sys/menu',
     method: 'POST',
     data
   })
@@ -39,5 +39,15 @@ export const modifyMenu = (data) => {
     url: '/sys/menu',
     method: 'PUT',
     data
+  })
+}
+
+/**
+ * 删除菜单
+ */
+export const deleteMenu = (id) => {
+  return request({
+    url: `/sys/menu/${id}`,
+    method: 'DELETE'
   })
 }

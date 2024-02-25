@@ -67,7 +67,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { pageRoleList } from '@/api/role'
+import { pageRoleList, deleteRole } from '@/api/role'
 import RoleDialog from '../role/RoleFrom.vue'
 import MenuDialog from '../role/RoleAssignMenuForm.vue'
 import { roleTypeList } from '@/constant/role'
@@ -153,6 +153,7 @@ const handleDelete = (row) => {
   ElMessageBox.confirm('您确定删除' + row.name + '该角色信息', {
     type: 'warning'
   }).then(async () => {
+    await deleteRole(row.id)
     ElMessage.success('删除成功')
     // 重新渲染数据
     getListData()

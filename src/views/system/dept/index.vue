@@ -26,11 +26,8 @@
         <el-table-column prop="name" label="部门名称"> </el-table-column>
         <el-table-column prop="manageName" label="负责人"> </el-table-column>
         <el-table-column prop="seq" label="排序顺序"> </el-table-column>
-        <el-table-column prop="deleteState" label="删除状态" :formatter="formatType">
-          <!-- <template #default="scope">
-            <dict-tag :type="DICT_TYPE.COMMON_STATUS" :value="scope.row.status" />
-          </template> -->
-        </el-table-column>
+        <!-- <el-table-column prop="deleteState" label="删除状态" :formatter="formatType">
+        </el-table-column> -->
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
             <el-button type="info" size="small" @click="onMenuModifyClick(row)">编辑部门</el-button>
@@ -88,7 +85,7 @@ const handleDelete = (row) => {
   ElMessageBox.confirm('您确定删除' + row.name + '该部门信息', {
     type: 'warning'
   }).then(async () => {
-    deleteDept(row.id)
+    await deleteDept(row.id)
     ElMessage.success('删除成功')
     // 重新渲染数据
     getListData()

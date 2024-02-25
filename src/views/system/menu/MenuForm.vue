@@ -16,9 +16,9 @@
       </el-form-item>
       <el-form-item label="菜单类型" prop="type">
         <el-radio-group v-model="formData.type">
-          <el-radio-button label="1">目录</el-radio-button>
-          <el-radio-button label="2">菜单</el-radio-button>
-          <el-radio-button label="3">按钮</el-radio-button>
+          <el-radio-button :label="1">目录</el-radio-button>
+          <el-radio-button :label="2">菜单</el-radio-button>
+          <el-radio-button :label="3">按钮</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="formData.type !== 3" label="访问地址" prop="path">
