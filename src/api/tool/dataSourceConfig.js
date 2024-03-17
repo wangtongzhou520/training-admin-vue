@@ -48,3 +48,13 @@ export const deleteDataSourceConfig = (id) => {
     method: 'DELETE'
   })
 }
+
+/**
+ * 删除角色
+ */
+export const getDataSourceConfigList = () => {
+  return request({
+    url: `/tool/dataSourceConfig/list`,
+    method: 'GET'
+  })
+}

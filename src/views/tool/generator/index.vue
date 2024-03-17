@@ -13,7 +13,7 @@
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="onAddRoleClick">新增</el-button>
+            <el-button type="success" @click="handleAdd">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -29,9 +29,8 @@
           align="center"
           label="表描述"
           prop="tableComment"
-          width="200"
         />
-        <el-table-column align="center" label="实体" prop="className" width="200" />
+        <el-table-column align="center" label="实体" prop="className" />
         <el-table-column prop="gmtCreate" label="创建时间">
           <template #default="{ row }">
             {{ $filters.dateFilter(row.gmtCreate) }}
@@ -39,12 +38,11 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="info" size="small" @click="onRoleModifyClick(row)">编辑角色</el-button>
+            <el-button type="info" size="small" @click="handleUpdate(row)">编辑角色</el-button>
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-
       <el-pagination
         class="pagination"
         v-model:current-page="queryParams.pageNo"
@@ -57,18 +55,18 @@
       >
       </el-pagination>
     </el-card>
-    <!-- <DataSourceConfigDialog
-      v-model="dataSourceConfigDialogFormVisible"
+    <AddTableDialog
+      v-model="addTableFormVisible"
       :selectRow="selectRow"
-      @dataSourceConfigAction="getListData()"
-    ></DataSourceConfigDialog> -->
+      @addGeneratorAction="getListData()"
+    ></AddTableDialog>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
 import { pageGenerator, deleteGenerator } from '@/api/tool/generator'
-// import DataSourceConfigDialog from '../dataSourceConfig/DataSourceConfigForm.vue'
+import AddTableDialog from '../generator/AddTable.vue'
 
 /**
  * 列表内容
@@ -103,19 +101,16 @@ const getListData = async () => {
 /**
  * 编辑角色
  */
-const dataSourceConfigDialogFormVisible = ref(false)
-const onRoleModifyClick = (row) => {
-  dataSourceConfigDialogFormVisible.value = true
+const addTableFormVisible = ref(false)
+const handleUpdate = (row) => {
+  addTableFormVisible.value = true
   selectRow.value = row
 }
 
 /**
  * 新增角色
  */
-const onAddRoleClick = () => {
-  dataSourceConfigDialogFormVisible.value = true
-  selectRow.value = {}
-}
+const handleAdd = () => {}
 
 // 分页相关
 /**

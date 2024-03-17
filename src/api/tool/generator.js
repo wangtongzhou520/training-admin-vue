@@ -49,9 +49,26 @@ export const deleteGenerator = (id) => {
   })
 }
 
-export const getUserInfo = (id) => {
+/**
+ * 获取详情
+ */
+export const getDatabaseTableDetail = (id) => {
   return request({
-    url: `/sys/getUserInfo?id=${id}`,
+    url: `/tool/generator/detail/${id}`,
     method: 'GET'
+  })
+}
+
+/**
+ * 获得表定义
+ *
+ * @param {} data
+ * @returns
+ */
+export const getDatabaseTableList = (data) => {
+  return request({
+    url: `/tool/generator/table/list`,
+    method: 'GET',
+    params: data
   })
 }
