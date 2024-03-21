@@ -67,6 +67,7 @@
 import { ref, reactive } from 'vue'
 import { pageGenerator, deleteGenerator } from '@/api/tool/generator'
 import AddTableDialog from '../generator/AddTable.vue'
+import { useRouter } from 'vue-router'
 
 /**
  * 列表内容
@@ -81,6 +82,8 @@ const total = ref(0)
  * 选中的数据
  */
 const selectRow = ref({})
+
+const router = useRouter()
 
 /**
  * 查询参数
@@ -101,16 +104,19 @@ const getListData = async () => {
 /**
  * 编辑角色
  */
-const addTableFormVisible = ref(false)
 const handleUpdate = (row) => {
-  addTableFormVisible.value = true
-  selectRow.value = row
+  router.push('/generator/edit?id=' + row.id)
 }
 
 /**
  * 新增角色
  */
-const handleAdd = () => {}
+const addTableFormVisible = ref(false)
+
+const handleAdd = () => {
+  addTableFormVisible.value = true
+  selectRow.value = row
+}
 
 // 分页相关
 /**

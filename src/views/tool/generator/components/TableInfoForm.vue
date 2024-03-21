@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form :model="formData" border style="width: 100%">
+    <el-form ref="formRef" :model="formData" label-width="120px">
       <el-row>
         <el-col :span="12">
           <el-form-item label="模块名" prop="moduleName">
@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, ref, watch } from 'vue'
 
 const formRef = ref()
 const formData = ref({
@@ -65,7 +65,7 @@ const formData = ref({
 const props = defineProps({
   table: {
     type: Object,
-    default: () => null
+    required: true
   }
 })
 
@@ -80,6 +80,10 @@ watch(
     immediate: true
   }
 )
+
+// defineExpose({
+//   validate: async () => unref(formRef)?.validate()
+// })
 </script>
 
 <style lang="scss" scoped></style>

@@ -64,6 +64,15 @@ export const publicRoutes = [
         }
       },
       {
+        path: '/generator/edit',
+        component: () => import('@/views/tool/generator/EditTable.vue'),
+        meta: {
+          hidden: true,
+          icon: 'edittable',
+          title: '修改生成配置'
+        }
+      },
+      {
         path: '/404',
         name: '404',
         component: () => import('@/views/404')
