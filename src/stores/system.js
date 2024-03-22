@@ -33,6 +33,16 @@ export const systemUseStore = defineStore(
       }
     }
 
+    /**
+     * 删除摸个视图标签
+     */
+    const delView = (tag) => {
+      let index = tagsViewList.value.findIndex((item) => item.path === tag.path)
+      if (index > -1) {
+        tagsViewList.value.splice(index, 1)
+      }
+    }
+
     const triggerSidebarOpened = (state) => {
       sidebarOpened.value = !state
     }
@@ -43,6 +53,7 @@ export const systemUseStore = defineStore(
       userStyle,
       tagsViewList,
       addTagsViewList,
+      delView,
       removeTagsView
     }
   },

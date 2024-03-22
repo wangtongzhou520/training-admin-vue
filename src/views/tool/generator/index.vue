@@ -38,7 +38,7 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="info" size="small" @click="handleUpdate(row)">编辑角色</el-button>
+            <el-button type="info" size="small" @click="handleUpdate(row)">编辑列</el-button>
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
@@ -83,7 +83,7 @@ const total = ref(0)
  */
 const selectRow = ref({})
 
-const router = useRouter()
+const { push } = useRouter()
 
 /**
  * 查询参数
@@ -105,7 +105,7 @@ const getListData = async () => {
  * 编辑角色
  */
 const handleUpdate = (row) => {
-  router.push('/generator/edit?id=' + row.id)
+  push('/generator/edit?id=' + row.id)
 }
 
 /**

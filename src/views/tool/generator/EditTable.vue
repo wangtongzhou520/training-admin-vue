@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="formLoading">
     <el-tabs v-model="activeName">
       <el-tab-pane label="表信息" name="table">
         <TableInfoForm ref="tableInfoRef" :table="formData.table" />
@@ -21,8 +21,10 @@
 import { ref } from 'vue'
 import ColumInfoForm from './components/ColumInfoForm.vue'
 import TableInfoForm from './components/TableInfoForm.vue'
-import { getDatabaseTableDetail } from '@/api/tool/generator'
-import { useRoute, useRouter } from 'vue-router'
+import { getDatabaseTableDetail, modifyGenerator } from '@/api/tool/generator'
+import { useRouter } from 'vue-router'
+import { systemUseStore } from '@/stores/system'
+import { ElMessage } from 'element-plus'
 
 /**
  * 路由
@@ -31,7 +33,7 @@ const { push, currentRoute } = useRouter()
 /**
  * 参数
  */
-const { query } = useRoute()
+const router = useRouter()
 
 /**
  * 激活窗口
@@ -46,13 +48,15 @@ const formLoading = ref(false)
 const tableInfoRef = ref()
 const columInfoRef = ref()
 
+const systemStore = systemUseStore()
+
 const formData = reactive({
   table: {},
   columns: []
 })
 
 const getDetail = async () => {
-  const id = query.id
+  const id = router.currentRoute.value.query.id
   if (!id) {
     return
   }
@@ -61,7 +65,6 @@ const getDetail = async () => {
     const result = await getDatabaseTableDetail(id)
     formData.table = result.generatorTable
     formData.columns = result.generatorColumns
-    console.log(result.generatorColumns)
   } finally {
     formLoading.value = false
   }
@@ -71,24 +74,18 @@ const getDetail = async () => {
  * 提交
  */
 const submitForm = async () => {
-  // // 参数校验
-  // if (!unref(formData)) return
-  // await unref(basicInfoRef)?.validate()
-  // await unref(generateInfoRef)?.validate()
-  // try {
-  //   // 提交请求
-  //   await CodegenApi.updateCodegenTable(formData.value)
-  //   message.success(t('common.updateSuccess'))
-  //   close()
-  // } catch {}
+  // 提交请求
+  await modifyGenerator(formData)
+  ElMessage.success('修改列成功')
+  close()
 }
 
 /**
  * 关闭
  */
 const close = () => {
-  // delView(unref(currentRoute))
-  // push('/infra/codegen')
+  systemStore.delView(unref(currentRoute))
+  push('/tool/generator/index')
 }
 
 /**

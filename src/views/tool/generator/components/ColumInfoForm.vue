@@ -52,16 +52,12 @@
     </el-table-column>
     <el-table-column label="查询" min-width="4%">
       <template #default="scope">
-        <el-checkbox
-          v-model="scope.row.queryConditionField"
-          false-label="false"
-          true-label="true"
-        />
+        <el-checkbox v-model="scope.row.queryResultField" false-label="false" true-label="true" />
       </template>
     </el-table-column>
     <el-table-column label="查询方式" min-width="10%">
       <template #default="scope">
-        <el-select v-model="scope.row.queryResultField">
+        <el-select v-model="scope.row.queryConditionField">
           <el-option label="=" value="=" />
           <el-option label="!=" value="!=" />
           <el-option label=">" value=">" />
@@ -93,8 +89,8 @@
         </el-select>
       </template>
     </el-table-column>
-    <el-table-column label="字典类型" min-width="12%">
-      <!-- <template #default="scope">
+    <!-- <el-table-column label="字典类型" min-width="12%"> -->
+    <!-- <template #default="scope">
           <el-select v-model="scope.row.dictType" clearable filterable placeholder="请选择">
             <el-option
               v-for="dict in dictOptions"
@@ -104,12 +100,12 @@
             />
           </el-select>
         </template> -->
-    </el-table-column>
-    <!-- <el-table-column label="示例" min-width="10%">
+    <!-- </el-table-column> -->
+    <el-table-column label="示例" min-width="10%">
       <template #default="scope">
         <el-input v-model="scope.row.example" />
       </template>
-    </el-table-column> -->
+    </el-table-column>
   </el-table>
 </template>
 
@@ -130,7 +126,6 @@ watch(
   () => props.columns,
   (columns) => {
     if (!columns) return
-    console.log(props.columns)
     formData.value = columns
   },
   {
