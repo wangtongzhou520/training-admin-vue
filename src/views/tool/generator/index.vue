@@ -38,6 +38,9 @@
         </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
+            <el-button type="success" size="small" @click="handlePreviewCode(row)"
+              >预览代码</el-button
+            >
             <el-button type="info" size="small" @click="handleUpdate(row)">编辑列</el-button>
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
@@ -60,6 +63,7 @@
       :selectRow="selectRow"
       @addGeneratorAction="getListData()"
     ></AddTableDialog>
+    <PreviewCode v-model="previewCodeVisible" :selectRow="selectRow"></PreviewCode>
   </div>
 </template>
 
@@ -67,6 +71,7 @@
 import { ref, reactive } from 'vue'
 import { pageGenerator, deleteGenerator } from '@/api/tool/generator'
 import AddTableDialog from '../generator/AddTable.vue'
+import PreviewCode from '../generator/PreviewCode.vue'
 import { useRouter } from 'vue-router'
 
 /**
@@ -113,8 +118,18 @@ const handleUpdate = (row) => {
  */
 const addTableFormVisible = ref(false)
 
-const handleAdd = () => {
+const handleAdd = (row) => {
   addTableFormVisible.value = true
+  selectRow.value = row
+}
+
+/**
+ * 代码预览
+ */
+const previewCodeVisible = ref(false)
+
+const handlePreviewCode = (row) => {
+  previewCodeVisible.value = true
   selectRow.value = row
 }
 

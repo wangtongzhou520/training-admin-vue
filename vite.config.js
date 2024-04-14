@@ -10,6 +10,7 @@ import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Inspect from 'vite-plugin-inspect'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import prismjsPlugin from 'vite-plugin-prismjs'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -25,6 +26,12 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    prismjsPlugin({
+      languages: 'all', // 语言
+      plugins: ['line-numbers', 'show-language', 'copy-to-clipboard', 'inline-color'],
+      theme: 'okaidia', // 主题
+      css: true
+    }),
     AutoImport({
       imports: ['vue'],
       resolvers: [

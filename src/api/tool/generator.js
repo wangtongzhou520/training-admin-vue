@@ -72,3 +72,17 @@ export const getDatabaseTableList = (data) => {
     params: data
   })
 }
+
+/**
+ * 预览表单
+ *
+ * @param {} data
+ * @returns
+ */
+export const getPreviewCode = (data) => {
+  return request({
+    url: `/tool/generator/preview`,
+    method: 'GET',
+    params: data
+  })
+}

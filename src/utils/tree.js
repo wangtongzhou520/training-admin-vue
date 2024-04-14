@@ -1,28 +1,9 @@
 /**
- * 递归函数
- * @param arr 数组
- * @param pid 父ID，不传默认为0
+ * list convert
+ *
+ * @param {*} list
+ * @returns
  */
-// export const tranListToTreeData = (arr, pid = 0) => {
-//   let newArr = []
-//   //循环数组
-//   arr.forEach((item, i) => {
-//     //判断pid与遍历元素中pid相同的数据，相等的为同级数据，追加到该级数组中
-//     if (item.parentId == pid) {
-//       newArr.push(item)
-//       /**
-//        * 判断该item元素是否有子项
-//        * 当数组中有元素的pid与item.id相等，some函数会返回true，表示该元素有子项数据
-//        */
-//       if (arr.some((ele) => ele.parentId == item.id)) {
-//         //此时，通过重新调用本函数进行递归处理
-//         item['children'] = tranListToTreeData(arr, item.id)
-//       }
-//     }
-//   })
-//   return newArr
-// }
-
 export function tranListToTreeData(list) {
   // 最终要产出的树状数据的数组
   const treeList = []
@@ -52,6 +33,36 @@ export function tranListToTreeData(list) {
   })
   // 返回出去
   return treeList
+}
+
+/**
+ * List convet tree
+ */
+export const tranListToTreeData2 = (data, id, parentId, children, rootId) => {
+  id = id || 'id'
+  parentId = parentId || 'parentId'
+  // children = children || 'children'
+  rootId =
+    rootId ||
+    Math.min(
+      ...data.map((item) => {
+        return item[parentId]
+      })
+    ) ||
+    0
+  // 对源数据深度克隆
+  const cloneData = JSON.parse(JSON.stringify(data))
+  // 循环所有项
+  const treeData = cloneData.filter((father) => {
+    const branchArr = cloneData.filter((child) => {
+      // 返回每一项的子级数组
+      return father[id] === child[parentId]
+    })
+    branchArr.length > 0 ? (father.children = branchArr) : ''
+    // 返回第一层
+    return father[parentId] === rootId
+  })
+  return treeData !== '' ? treeData : data
 }
 
 /**
