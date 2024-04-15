@@ -2,7 +2,7 @@
   <div class="user-manage-container">
     <el-card class="header">
       <div>
-        <el-form :inline="true" :model="queryParams" class="demo-form-inline">
+        <el-form :inline="true" :model="queryParams">
           <el-form-item label="角色名称" prop="name">
             <el-input v-model="queryParams.name" clearable placeholder="请输入菜单名称" />
           </el-form-item>
