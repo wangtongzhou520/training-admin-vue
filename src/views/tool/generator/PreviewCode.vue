@@ -44,9 +44,7 @@
               :label="item.filePath.substring(item.filePath.lastIndexOf('/') + 1)"
               :name="item.filePath"
             >
-              <el-scrollbar>
-                <pre><code class="language-java line-numbers copy-to-clipboard">{{item.code}}</code></pre>
-              </el-scrollbar>
+              <CodeHighlight :code="item.code" :language="item.language" />
             </el-tab-pane>
           </el-tabs>
         </el-card>
@@ -56,10 +54,8 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, onMounted, onUpdated } from 'vue'
-import Prism from 'prismjs'
-import 'prismjs/themes/prism.css'
-
+import { defineProps, defineEmits } from 'vue'
+import CodeHighlight from './components/CodeHighlight.vue'
 import { tranListToTreeData2 } from '@/utils/tree.js'
 import { getPreviewCode } from '@/api/tool/generator'
 
@@ -96,9 +92,18 @@ const emits = defineEmits(['update:modelValue'])
 const open = async () => {
   try {
     loading.value = true
-    // 生成代码
     const data = await getPreviewCode({ tableId: props.selectRow.id })
-    previewCodegen.value = data
+    data.forEach((item) => {
+      var languageValue = item.filePath.substring(item.filePath.lastIndexOf('.') + 1)
+      if (languageValue == 'vue') {
+        languageValue = 'javascript'
+      }
+      previewCodegen.value.push({
+        language: languageValue,
+        code: item.code,
+        filePath: item.filePath
+      })
+    })
     // 处理文件
     let file = handleFiles(data)
     preview.fileTree = tranListToTreeData2(file, 'id', 'parentId', 'children', '/')
@@ -192,18 +197,10 @@ const handleNodeClick = async (data, node) => {
  * 关闭
  */
 const closed = () => {
+  preview.activeName = ''
+  previewCodegen.value = []
   emits('update:modelValue', false)
 }
-
-/**
- * 初始化
- */
-onMounted(async () => {
-  Prism.highlightAll()
-})
-onUpdated(() => {
-  Prism.highlightAll()
-})
 </script>
 
 <style lang="scss" scoped>
