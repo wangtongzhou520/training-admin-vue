@@ -125,14 +125,15 @@
       >
       </el-pagination>
     </el-card>
-    <FileDialog v-model="fileFormVisible" :selectRow="selectRow" @success="getListData()" />
+    <FileDialog v-model="fileFormVisible" :selectRow="selectRow" @success="getListData()">
+    </FileDialog>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
-import FileDialog from '../file/FileFrom.vue'
-import { pageFileList, deleteFile } from '@/api/file'
+import { pageFileList, deleteFile } from '@/api/tool/file'
+import FileDialog from '../file/FileForm.vue'
 
 /**
  * 列表内容

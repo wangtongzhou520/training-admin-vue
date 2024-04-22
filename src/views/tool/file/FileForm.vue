@@ -65,7 +65,7 @@
 </template>
 <script setup>
 import { defineProps, defineEmits } from 'vue'
-import { addFile, modifyFile } from '@/api/file'
+import { addFile, modifyFile } from '@/api/tool/file'
 import { ElMessage } from 'element-plus'
 
 /**

@@ -6,8 +6,8 @@ import request from '@/utils/request'
 export const pageFileList = (data) => {
   return request({
     url: '/tool/file/page',
-    method: 'POST',
-    data
+    method: 'GET',
+    params: data
   })
 }
 
