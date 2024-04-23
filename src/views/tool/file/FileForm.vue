@@ -27,7 +27,7 @@
       <el-form-item label="备注" prop="remark">
         <el-input v-model="formData.remark" placeholder="请输入备注" />
       </el-form-item>
-      <el-form-item label="创建者" prop="createOperator">
+      <!-- <el-form-item label="创建者" prop="createOperator">
         <el-input v-model="formData.createOperator" placeholder="请输入创建者" />
       </el-form-item>
       <el-form-item label="修改者" prop="modifiedOperator">
@@ -48,7 +48,7 @@
           value-format="x"
           placeholder="选择修改时间"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="删除状态" prop="deleteState">
         <el-checkbox-group v-model="formData.deleteState">
           <el-radio label="1">请选择字典生成</el-radio>

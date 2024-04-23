@@ -2,10 +2,10 @@
   <div class="container">
     <el-card class="header">
       <el-form :inline="true" :model="queryParams">
-        <el-form-item label="分类ID" prop="categoryId">
+        <el-form-item label="分类" prop="categoryId">
           <el-input
             v-model="queryParams.categoryId"
-            placeholder="请输入分类ID"
+            placeholder="请输入分类"
             clearable
             class="!w-240px"
           >
@@ -20,46 +20,15 @@
           >
           </el-input>
         </el-form-item>
-        <el-form-item label="文件路径" prop="path">
-          <el-input
-            v-model="queryParams.path"
-            placeholder="请输入文件路径"
-            clearable
-            class="!w-240px"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item label="url" prop="url">
-          <el-input v-model="queryParams.url" placeholder="请输入url" clearable class="!w-240px">
-          </el-input>
-        </el-form-item>
-        <el-form-item label="文件后缀" prop="suffix">
-          <el-input
-            v-model="queryParams.suffix"
-            placeholder="请输入文件后缀"
-            clearable
-            class="!w-240px"
-          >
-          </el-input>
-        </el-form-item>
-        <el-form-item label="文件类型,1文件0图片2视频" prop="type">
+        <el-form-item label="文件类型" prop="type">
           <el-select
             v-model="queryParams.type"
-            placeholder="请选择文件类型,1文件0图片2视频"
+            placeholder="请选择文件类型"
             clearable
             class="!w-240px"
           >
             <el-option label="请选择字典生成" value="" />
           </el-select>
-        </el-form-item>
-        <el-form-item label="文件大小" prop="size">
-          <el-input
-            v-model="queryParams.size"
-            placeholder="请输入文件大小"
-            clearable
-            class="!w-240px"
-          >
-          </el-input>
         </el-form-item>
         <el-form-item>
           <el-form-item>
@@ -74,16 +43,16 @@
     <el-card>
       <el-table :data="tableData" v-loading="loading" border style="width: 100%">
         <el-table-column label="#" type="index" />
-        <el-table-column label="编号" align="center" prop="id" />
-        <el-table-column label="分类ID" align="center" prop="categoryId" />
+        <!-- <el-table-column label="编号" align="center" prop="id" /> -->
+        <el-table-column label="分类" align="center" prop="categoryId" />
         <el-table-column label="文件名" align="center" prop="name" />
         <el-table-column label="文件路径" align="center" prop="path" />
         <el-table-column label="url" align="center" prop="url" />
-        <el-table-column label="文件后缀" align="center" prop="suffix" />
-        <el-table-column label="文件类型,1文件0图片2视频" align="center" prop="type" />
+        <!-- <el-table-column label="文件后缀" align="center" prop="suffix" /> -->
+        <el-table-column label="文件类型" align="center" prop="type" />
         <el-table-column label="文件大小" align="center" prop="size" />
         <el-table-column label="备注" align="center" prop="remark" />
-        <el-table-column label="创建者" align="center" prop="createOperator" />
+        <!-- <el-table-column label="创建者" align="center" prop="createOperator" />
         <el-table-column label="修改者" align="center" prop="modifiedOperator" />
         <el-table-column
           label="创建时间"
@@ -91,7 +60,7 @@
           prop="gmtCreate"
           :formatter="dateFormatter"
           width="180px"
-        />
+        /> -->
         <el-table-column
           label="修改时间"
           align="center"
