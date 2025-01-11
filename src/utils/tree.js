@@ -10,6 +10,8 @@ export function tranListToTreeData(list) {
   // 所有项都使用对象存储起来
   const map = {}
 
+  if (list == null || list.length == 0) return []
+
   // 建立一个映射关系：通过id快速找到对应的元素
   list.forEach((item) => {
     if (!item.children) {

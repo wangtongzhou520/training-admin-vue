@@ -1,31 +1,47 @@
 <template>
-  <div>
-    <el-row :gutter="20">
-      <el-col :span="4" :xs="24">
-        <el-card>
-          <FileCategoryTree @node-click="handleDeptNodeClick" />
-        </el-card>
-      </el-col>
-      <el-col :span="20" :xs="24">
-        <div class="user-manage-container">
-          <el-card class="header">
-            <el-form :inline="true" :model="queryParams" class="-mb-15px" label-width="68px">
-              <el-form-item label="文件名" prop="name">
-                <el-input v-model="queryParams.name" clearable placeholder="请输入文件名" />
-              </el-form-item>
-              <el-form-item label="文件类型" prop="suffix">
-                <el-input v-model="queryParams.suffix" clearable placeholder="请输入文件类型" />
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="handleQuery">查询</el-button>
-              </el-form-item>
-              <el-form-item>
-                <el-button type="success" @click="handleCreate">新增</el-button>
-              </el-form-item>
-            </el-form>
-          </el-card>
-          <el-card>
-            <el-table :data="tableData" v-loading="loading" border style="width: 100%">
+  <div class="container">
+    <el-card class="header">
+      <el-form :inline="true" :model="queryParams">
+        <el-form-item label="分类" prop="categoryId">
+          <el-input
+            v-model="queryParams.categoryId"
+            placeholder="请输入分类"
+            clearable
+            class="!w-240px"
+          >
+          </el-input>
+        </el-form-item>
+        <el-form-item label="文件名" prop="name">
+          <el-input
+            v-model="queryParams.name"
+            placeholder="请输入文件名"
+            clearable
+            class="!w-240px"
+          >
+          </el-input>
+        </el-form-item>
+        <el-form-item label="文件类型" prop="type">
+          <el-select
+            v-model="queryParams.type"
+            placeholder="请选择文件类型"
+            clearable
+            class="!w-240px"
+          >
+            <el-option label="请选择字典生成" value="" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="handleQuery">查询</el-button>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="success" @click="handleCreate">新增</el-button>
+          </el-form-item>
+        </el-form-item>
+      </el-form>
+    </el-card>
+    <el-card>
+      <el-table :data="tableData" v-loading="loading" border style="width: 100%">
         <el-table-column label="#" type="index" />
         <!-- <el-table-column label="编号" align="center" prop="id" /> -->
         <el-table-column label="分类" align="center" prop="categoryId" />
@@ -36,6 +52,22 @@
         <el-table-column label="文件类型" align="center" prop="type" />
         <el-table-column label="文件大小" align="center" prop="size" />
         <el-table-column label="备注" align="center" prop="remark" />
+        <!-- <el-table-column label="创建者" align="center" prop="createOperator" />
+        <el-table-column label="修改者" align="center" prop="modifiedOperator" />
+        <el-table-column
+          label="创建时间"
+          align="center"
+          prop="gmtCreate"
+          :formatter="dateFormatter"
+          width="180px"
+        /> -->
+        <el-table-column
+          label="修改时间"
+          align="center"
+          prop="gmtModified"
+          :formatter="dateFormatter"
+          width="180px"
+        />
         <el-table-column label="删除状态" align="center" prop="deleteState" />
         <el-table-column label="操作" align="center">
           <el-button
@@ -46,21 +78,31 @@
             >编辑角色</el-button
           >
           <el-button link type="danger" @click="handleDelete(row)" v-hasPermi="['tool:file:delete']"
-            >删除</el-button>
+            >删除</el-button
+          >
         </el-table-column>
       </el-table>
-          </el-card>
-        </div>
-      </el-col>
-    </el-row>
+      <el-pagination
+        class="pagination"
+        v-model:current-page="queryParams.pageNo"
+        v-model:page-size="queryParams.pageSize"
+        :page-sizes="[10, 20]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      >
+      </el-pagination>
+    </el-card>
+    <FileDialog v-model="fileFormVisible" :selectRow="selectRow" @success="getListData()">
+    </FileDialog>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
 import { pageFileList, deleteFile } from '@/api/tool/file'
-// import FileDialog from '../file/FileForm.vue'
-import FileCategoryTree from '../file/FileCategory.vue'
+import FileDialog from '../file/FileForm.vue'
 
 /**
  * 列表内容
@@ -79,8 +121,13 @@ const selectRow = ref({})
  * 查询参数
  */
 const queryParams = reactive({
+  categoryId: undefined,
   name: undefined,
+  path: undefined,
+  url: undefined,
   suffix: undefined,
+  type: undefined,
+  size: undefined,
   pageNo: 1,
   pageSize: 10
 })
@@ -156,7 +203,6 @@ onMounted(() => {
   getListData()
 })
 </script>
-
 
 <style lang="scss" scoped>
 .container {

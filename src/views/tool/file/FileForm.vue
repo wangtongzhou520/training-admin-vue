@@ -16,7 +16,7 @@
       <el-form-item label="文件后缀" prop="suffix">
         <el-input v-model="formData.suffix" placeholder="请输入文件后缀" />
       </el-form-item>
-      <el-form-item label="文件类型,1文件0图片2视频" prop="type">
+      <el-form-item label="文件类型" prop="type">
         <el-select v-model="formData.type" placeholder="请选择文件类型,1文件0图片2视频">
           <el-option label="请选择字典生成" value="" />
         </el-select>
