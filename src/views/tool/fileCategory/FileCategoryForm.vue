@@ -122,11 +122,6 @@ const onConfirm = async () => {
   emits('fileCategoryAction')
 }
 
-
-// /** 初始化 **/
-// onMounted(() => {
-//   getMeanTree()
-// })
 </script>
 
 <style lang="scss" scoped></style>

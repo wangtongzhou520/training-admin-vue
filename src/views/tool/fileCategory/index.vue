@@ -10,7 +10,7 @@
             <el-button type="primary" @click="onSearch">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="success" @click="onAddMenuClick">新增</el-button>
+            <el-button type="success" @click="onAddClick">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -27,7 +27,7 @@
         <el-table-column prop="seq" label="排序顺序"> </el-table-column>
         <el-table-column label="操作" fixed="right" width="260">
           <template #default="{ row }">
-            <el-button type="info" size="small" @click="onMenuModifyClick(row)">编辑部门</el-button>
+            <el-button type="info" size="small" @click="onModifyClick(row)">编辑</el-button>
             <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
@@ -92,7 +92,7 @@ const handleDelete = (row) => {
  * 编辑菜单
  */
 const fileCategoryFormVisible = ref(false)
-const onMenuModifyClick = (row) => {
+const onModifyClick = (row) => {
   fileCategoryFormVisible.value = true
   selectRow.value = row
 }
@@ -100,7 +100,7 @@ const onMenuModifyClick = (row) => {
 /**
  * 新增菜单
  */
-const onAddMenuClick = () => {
+const onAddClick = () => {
   fileCategoryFormVisible.value = true
   selectRow.value = {}
 }

@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <el-col :span="4" :xs="24">
         <el-card>
-          <FileCategoryTree @node-click="handleDeptNodeClick" />
+          <FileCategoryTree @node-click="handleFileCategoryClick" />
         </el-card>
       </el-col>
       <el-col :span="20" :xs="24">
@@ -25,7 +25,7 @@
             </el-form>
           </el-card>
           <el-card>
-            <el-table :data="tableData" v-loading="loading" border style="width: 100%">
+            <el-table :data="tableData"  border style="width: 100%">
         <el-table-column label="#" type="index" />
         <!-- <el-table-column label="编号" align="center" prop="id" /> -->
         <el-table-column label="分类" align="center" prop="categoryId" />
@@ -45,10 +45,15 @@
             v-permission="['tool:file:role-menu']"
             >编辑角色</el-button
           >
-          <el-button link type="danger" @click="handleDelete(row)" v-hasPermi="['tool:file:delete']"
+          <el-button link type="danger" @click="handleDelete(row)"
             >删除</el-button>
         </el-table-column>
       </el-table>
+      <file-dialog
+        v-model="fileFormVisible"
+        :selectRow="selectRow"
+        @fileAction="getListData()"
+        ></file-dialog>
           </el-card>
         </div>
       </el-col>
@@ -59,7 +64,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { pageFileList, deleteFile } from '@/api/tool/file'
-// import FileDialog from '../file/FileForm.vue'
+import FileDialog from '../file/FileForm.vue'
 import FileCategoryTree from '../file/FileCategory.vue'
 
 /**
@@ -81,6 +86,7 @@ const selectRow = ref({})
 const queryParams = reactive({
   name: undefined,
   suffix: undefined,
+  categoryId: undefined,
   pageNo: 1,
   pageSize: 10
 })
@@ -92,6 +98,13 @@ const getListData = async () => {
   const result = await pageFileList(queryParams)
   tableData.value = result.list
   total.value = result.total
+}
+
+
+/** 分类点击 */
+const handleFileCategoryClick = async (row) => {
+  queryParams.categoryId = row.id
+  await getListData()
 }
 
 /**
@@ -108,7 +121,7 @@ const handleModify = (row) => {
  */
 const handleCreate = () => {
   fileFormVisible.value = true
-  selectRow.value = {}
+  selectRow.value = {categoryId: queryParams.categoryId}
 }
 
 // 分页相关
