@@ -35,8 +35,6 @@
         <!-- <el-table-column label="文件后缀" align="center" prop="suffix" /> -->
         <el-table-column label="文件类型" align="center" prop="type" />
         <el-table-column label="文件大小" align="center" prop="size" />
-        <el-table-column label="备注" align="center" prop="remark" />
-        <el-table-column label="删除状态" align="center" prop="deleteState" />
         <el-table-column label="操作" align="center">
           <el-button
             type="info"
