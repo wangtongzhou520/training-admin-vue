@@ -28,7 +28,7 @@
             <el-table :data="tableData"  border style="width: 100%">
         <el-table-column label="#" type="index" />
         <!-- <el-table-column label="编号" align="center" prop="id" /> -->
-        <el-table-column label="分类" align="center" prop="categoryId" />
+        <el-table-column label="分类" align="center" prop="categoryName" />
         <el-table-column label="文件名" align="center" prop="name" />
         <el-table-column label="文件路径" align="center" prop="path" />
         <el-table-column label="url" align="center" prop="url" />
@@ -36,22 +36,22 @@
         <el-table-column label="文件类型" align="center" prop="type" />
         <el-table-column label="文件大小" align="center" prop="size" />
         <el-table-column label="操作" align="center">
-          <el-button
-            type="info"
-            size="small"
-            @click="handleModify(row)"
-            v-permission="['tool:file:role-menu']"
-            >编辑角色</el-button
-          >
-          <el-button link type="danger" @click="handleDelete(row)"
-            >删除</el-button>
+          <template #default="{ row }">
+            <el-button type="info" size="small" @click="handleModify(row)">编辑</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
+          </template>
         </el-table-column>
       </el-table>
-      <file-dialog
-        v-model="fileFormVisible"
+      <uploadFile-dialog
+        v-model="uploadFileVisible"
         :selectRow="selectRow"
         @fileAction="getListData()"
-        ></file-dialog>
+        ></uploadFile-dialog>
+        <fileForm-dialog
+        v-model="fileFormVisible"
+        :selectRow="selectRow"
+        @success="getListData()"
+        ></fileForm-dialog>
           </el-card>
         </div>
       </el-col>
@@ -62,8 +62,10 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { pageFileList, deleteFile } from '@/api/tool/file'
-import FileDialog from '../file/FileForm.vue'
+import UploadFileDialog from '../file/UploadFile.vue'
 import FileCategoryTree from '../file/FileCategory.vue'
+import FileFormDialog from '../file/FileForm.vue'
+
 
 /**
  * 列表内容
@@ -109,6 +111,7 @@ const handleFileCategoryClick = async (row) => {
  * 编辑
  */
 const fileFormVisible = ref(false)
+
 const handleModify = (row) => {
   fileFormVisible.value = true
   selectRow.value = row
@@ -117,12 +120,16 @@ const handleModify = (row) => {
 /**
  * 新增
  */
+const uploadFileVisible = ref(false)
 const handleCreate = () => {
-  fileFormVisible.value = true
+  if (queryParams.categoryId === undefined) {
+    ElMessage.error('请选择分类')
+    return
+  }
+  uploadFileVisible.value = true
   selectRow.value = {categoryId: queryParams.categoryId}
 }
 
-// 分页相关
 /**
  * size 改变触发
  */

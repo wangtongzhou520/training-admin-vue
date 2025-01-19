@@ -154,7 +154,7 @@ const handleCurrentChange = (currentPage) => {
  * 删除
  */
 const handleDelete = (row) => {
-  ElMessageBox.confirm('您确定删除' + row.name + '该角色信息', {
+  ElMessageBox.confirm('您确定删除' + row.tableName + '该角色信息', {
     type: 'warning'
   }).then(async () => {
     await deleteGenerator(row.id)

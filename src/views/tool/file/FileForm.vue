@@ -1,51 +1,64 @@
 <template>
-  <el-dialog  :model-value="modelValue" :title="title" @close="closed" @open="open">
-    <el-upload
-    ref="formRef"
-    class="upload-demo"
-    drag
-    action="http://localhost:8888/tool/file/upload"
-    multiple
-    :limit="1"
-    :headers="uploadHeaders"
-    :on-success="handleSuccess"
-    :on-error="handleError"
-    :data="additionalData"
-  >
-    <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-    <div class="el-upload__text">
-      Drop file here or <em>click to upload</em>
-    </div>
-    <template #tip>
-      <el-button  type="primary" @click="submitFileForm">确 定</el-button>
-      <el-button>取 消</el-button>
+  <el-dialog ref="formRef" :model-value="modelValue" :title="title" @close="closed" @open="open">
+    <el-form :model="formData" label-width="80px">
+      <el-form-item label="筛选分类">
+        <el-tree-select
+          v-model="formData.categoryId"
+          :data="fileCategoryTree"
+          :props="defaultProps"
+          check-strictly
+          node-key="id"
+          placeholder="请选择筛选分类"
+        />
+      </el-form-item>
+      <!-- <el-form-item label="分类ID" prop="categoryId">
+        <el-input v-model="formData.categoryId" placeholder="请输入分类ID" />
+      </el-form-item> -->
+      <el-form-item label="文件名称" prop="name">
+        <el-input v-model="formData.name" placeholder="请输入文件名称" />
+      </el-form-item>
+      <el-form-item label="文件路径" prop="path">
+        <el-input v-model="formData.path" placeholder="请输入文件路径" />
+      </el-form-item>
+      <el-form-item label="文件URL" prop="url">
+        <el-input v-model="formData.url" placeholder="请输入文件URL" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="closed">关闭</el-button>
+        <el-button type="primary" @click="onConfirm">确定</el-button>
+      </span>
     </template>
-  </el-upload>
   </el-dialog>
 </template>
 <script setup>
 import { defineProps, defineEmits } from 'vue'
-import { addFile } from '@/api/tool/file'
+import { modifyFile } from '@/api/tool/file'
+import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
+import { fileCategoryList } from '@/api/tool/file'
 import { ElMessage } from 'element-plus'
-import { UploadFilled } from '@element-plus/icons-vue'
-import { useUserStore } from '@/stores/user'
 
 /**
  * 标题
  */
-const title = ref('新增文件')
-const uploadRef = ref()
-const fileList = ref([]) // 文件列表
-const userStore = useUserStore()
-const uploadHeaders = ref({
-    Authorization: 'Bearer ' + userStore.accessToken,
-  }) // 上传 Header 头
+const title = ref('编辑文件')
 
-// 定义 additionalData 对象
-const additionalData = ref({
-  categoryId: null
+/**
+ * 分类树
+ */
+const fileCategoryTree = ref([])
+
+/**
+ * 表单内容
+ */
+const formData = reactive({
+  id:undefined,
+  categoryId:undefined,
+  name:undefined,
+  path:undefined,
+  url:undefined
 })
-
 /**
  * 父传子的参数
  */
@@ -60,45 +73,47 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['update:modelValue', 'fileAction'])
-
-const submitFileForm = () => {
-  if (fileList.value.length == 0) {
-    ElMessage.error('请上传文件')
-    return
-  }
-  unref(uploadRef)?.submit()
-}
-
+const emits = defineEmits(['update:modelValue', 'success'])
 
 /**
  * 打开回调
  */
 const open = async () => {
-  uploadRef.value?.clearFiles()
-  additionalData.value.categoryId = props.selectRow.categoryId
+  //初始化表单
+  formData.id=props.selectRow.id
+  formData.categoryId=props.selectRow.categoryId
+  formData.name=props.selectRow.name
+  formData.path=props.selectRow.path
+  formData.url = props.selectRow.url
+
+  getCategoryTree()
 }
 
+const getCategoryTree = async () => {
+  const result = await fileCategoryList({
+    id: undefined,
+  })
+  fileCategoryTree.value = tranListToTreeData(result)
+}
+
+
+/**
+ * 关闭
+ */
 const closed = () => {
   emits('update:modelValue', false)
 }
 
 /**
- * 失败
+ * 确定
  */
-const handleError = () => {
+const onConfirm = async () => {
+  if (formData.id !== undefined) {
+    await modifyFile(formData)
+    ElMessage.success('新增成功')
+  }
   emits('update:modelValue', false)
-}
-
-/**
- * 成功
- */
-const handleSuccess = async () => {
-
-  unref(uploadRef)?.clearFiles()
-
-  emits('update:modelValue', false)
-  emits('fileAction')
+  emits('success')
 }
 </script>
 

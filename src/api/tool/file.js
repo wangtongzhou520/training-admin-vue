@@ -38,7 +38,7 @@ export const modifyFile = (data) => {
  */
 export const deleteFile = (id) => {
   return request({
-    url: `/tool/file/delete/id`,
+    url: `/tool/file/delete/${id}`,
     method: 'DELETE'
   })
 }
