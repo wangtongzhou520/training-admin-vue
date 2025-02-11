@@ -39,7 +39,22 @@ export const modifyCategory = (data) => {
  */
 export const deleteCategory = (id) => {
   return request({
-    url: `/course/category/delete/id`,
+    url: `/course/category/delete/${id}`,
     method: 'DELETE'
+  })
+}
+
+
+/**
+ * 获取分类树
+ *
+ * @param {} data
+ * @returns
+ */
+export const categoryList = (data) => {
+  return request({
+    url: '/course/category/categoryList',
+    method: 'POST',
+    data
   })
 }
