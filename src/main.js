@@ -13,6 +13,8 @@ import installFilter from '@/filter'
 import installDirective from '@/directives'
 import { useUserStore } from '@/stores/user'
 import { usePermissionStore } from '@/stores/permission'
+import  '@/utils/registerComponents' // 引入自动注册组件的脚本
+
 
 const app = createApp(App)
 installFilter(app)
@@ -39,4 +41,8 @@ app.use(router)
 app.use(i18n)
 app.component('svg-icon', svg)
 
+
 app.mount('#app')
+
+
+export { app }
