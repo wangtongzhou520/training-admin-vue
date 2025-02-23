@@ -9,11 +9,11 @@
             fit="cover"
             style="width: 100%; height: 200px;"
           />
-          <div class="image-info">
+          <!-- <div class="image-info">
             <p><strong>文件名:</strong> {{ item.name }}</p>
             <p><strong>文件类型:</strong> {{ item.type }}</p>
             <p><strong>文件大小:</strong> {{ item.size }} KB</p>
-          </div>
+          </div> -->
         </el-card>
       </el-col>
     </el-row>

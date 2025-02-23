@@ -1,4 +1,3 @@
-<!-- src/components/FileManagementDialog.vue -->
 <template>
   <el-dialog
     ref="dialogRef"
@@ -11,7 +10,7 @@
     <el-row :gutter="20">
       <el-col :span="4" :xs="24">
         <el-card>
-          <!-- <FileCategoryTree @node-click="handleFileCategoryClick" /> -->
+          <FileCategoryTree @node-click="handleFileCategoryClick" />
         </el-card>
       </el-col>
       <el-col :span="20" :xs="24">
@@ -21,11 +20,11 @@
               :images="tableData"
               @select="handleImageSelect"
             />
-            <uploadFile-dialog
+            <!-- <uploadFile-dialog
               v-model="uploadFileVisible"
               :selectRow="selectRow"
               @fileAction="getListData()"
-            ></uploadFile-dialog>
+            ></uploadFile-dialog> -->
           </el-card>
         </div>
       </el-col>
@@ -36,7 +35,6 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { pageFileList } from '@/api/tool/file'
-// import FileCategoryTree from '../file/FileCategory.vue'
 // import UploadFileDialog from '../file/UploadFile.vue'
 
 /**
