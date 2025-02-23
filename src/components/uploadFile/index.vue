@@ -11,21 +11,23 @@
     :on-success="handleSuccess"
     :on-error="handleError"
     :data="additionalData"
+    :file-list="fileList"
   >
     <el-icon class="el-icon--upload"><upload-filled /></el-icon>
     <div class="el-upload__text">
       Drop file here or <em>click to upload</em>
     </div>
     <template #tip>
-      <el-button  type="primary" @click="submitFileForm">确 定</el-button>
-      <el-button>取 消</el-button>
+      <div class="button-group">
+         <el-button  type="primary" @click="submitFileForm">确 定</el-button>
+         <el-button @click="closed">取 消</el-button>
+      </div>
     </template>
   </el-upload>
   </el-dialog>
 </template>
 <script setup>
 import { defineProps, defineEmits } from 'vue'
-import { addFile } from '@/api/tool/file'
 import { ElMessage } from 'element-plus'
 import { UploadFilled } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
@@ -81,6 +83,7 @@ const open = async () => {
 
 const closed = () => {
   uploadRef.value?.clearFiles()
+  fileList.value = [] // 新增手动清空
   emits('update:modelValue', false)
 }
 
@@ -97,10 +100,16 @@ const handleError = () => {
 const handleSuccess = async () => {
 
   unref(uploadRef)?.clearFiles()
-
+  fileList.value = [] // 新增手动清空
   emits('update:modelValue', false)
   emits('fileAction')
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+</style>

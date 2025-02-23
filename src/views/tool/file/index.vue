@@ -42,11 +42,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <uploadFile-dialog
+      <UploadFile
         v-model="uploadFileVisible"
         :selectRow="selectRow"
         @fileAction="getListData()"
-        ></uploadFile-dialog>
+        ></UploadFile>
         <fileForm-dialog
         v-model="fileFormVisible"
         :selectRow="selectRow"
@@ -62,7 +62,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { pageFileList, deleteFile } from '@/api/tool/file'
-import UploadFileDialog from '../file/UploadFile.vue'
+// import UploadFileDialog from '../file/UploadFile.vue'
 // import FileCategoryTree from '../file/FileCategory.vue'
 import FileFormDialog from '../file/FileForm.vue'
 
