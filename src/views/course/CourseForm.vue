@@ -28,14 +28,60 @@
       @select="handleImageSelected"
     />
       </el-form-item>
+      <el-form-item label="章节" prop="chapterState">
+      <el-radio-group v-model="formData.chapterState">
+        <el-radio label="0">无章节</el-radio>
+        <el-radio label="1">有章节</el-radio>
+      </el-radio-group>
+    </el-form-item>
+       <!-- 新增课时列表区域 -->
+    <el-form-item v-if="formData.chapterState === '0'" label="课时列表">
+      <div class="lesson-operations">
+        <el-button type="primary" @click="openFileDialog" class="add-btn">
+          添加课时
+        </el-button>
+      </div>
+      
+      <el-table
+        :data="lessonList"
+        row-key="id"
+        class="lesson-table"
+        @row-dragend="handleDragEnd"
+      >
+        <el-table-column>
+          <template #default>
+            <el-icon class="drag-handle"><Sort /></el-icon>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="name" label="文件名称" min-width="180" />
+
+        <el-table-column label="操作" width="120">
+          <template #default="{ $index }">
+            <el-button
+              type="danger"
+              link
+              @click="handleDeleteLesson($index)"
+            >
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-form-item>
+    <ImageSelect
+      v-model="fileManagementVisible"
+      @select="handleLessonSelected"
+    />
       <el-form-item label="发布" prop="isPublished">
         <el-checkbox-group v-model="formData.isPublished">
-          <el-radio label="1">请选择字典生成</el-radio>
+          <el-radio label="0">未发布</el-radio>
+          <el-radio label="1">已发布</el-radio>
         </el-checkbox-group>
       </el-form-item>
     </el-form>
     <template #footer>
-      <span class="dialog-footer">
+      <span>
         <el-button @click="closed">关闭</el-button>
         <el-button type="primary" @click="onConfirm">确定</el-button>
       </span>
@@ -53,6 +99,26 @@ import { ElMessage } from 'element-plus'
  * 控制文件管理弹窗的显示
  */
 const fileManagementVisible = ref(false)
+
+
+// 新增课时列表
+const lessonList = ref([])
+
+
+// 处理文件选择
+const handleLessonSelected = (file) => {
+  lessonList.value.push({
+    id: file.id,
+    name: file.name,
+    url: file.url
+  })
+}
+
+
+// 删除课时
+const handleDeleteLesson = (index) => {
+  lessonList.value.splice(index, 1)
+}
 
 
 /**
@@ -159,4 +225,36 @@ const onConfirm = async () => {
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.lesson-operations {
+  margin-bottom: 16px;
+  
+  .add-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+  }
+}
+
+.lesson-table {
+  :deep(.el-table__row) {
+    transition: all 0.3s;
+    
+    &:hover {
+      transform: translateX(4px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+  }
+
+  .drag-handle {
+    cursor: move;
+    color: #909399;
+    font-size: 16px;
+    
+    &:hover {
+      color: #409EFF;
+    }
+  }
+}
+</style>
