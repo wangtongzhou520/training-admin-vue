@@ -52,7 +52,7 @@
 import { defineProps, defineEmits, reactive } from 'vue'
 import { menuList } from '@/api/menu'
 import { roleMenuList, addRoleMenu } from '@/api/permission'
-import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
+import { tranListToTreeData, defaultProps } from '@/utils/tree'
 import { ElMessage } from 'element-plus'
 
 /**

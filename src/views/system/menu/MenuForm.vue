@@ -48,7 +48,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from 'vue'
-import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
+import { tranListToTreeData, defaultProps } from '@/utils/tree'
 import { menuList, addMenu, modifyMenu } from '@/api/menu'
 import { ElMessage } from 'element-plus'
 

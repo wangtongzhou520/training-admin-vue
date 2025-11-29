@@ -50,7 +50,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from 'vue'
-import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
+import { tranListToTreeData, defaultProps } from '@/utils/tree'
 import { deptList, addDept, modifyDept } from '@/api/dept'
 import { pageUserInfo } from '@/api/user'
 import { ElMessage } from 'element-plus'

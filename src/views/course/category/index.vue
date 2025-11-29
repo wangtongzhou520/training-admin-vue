@@ -59,7 +59,7 @@
 import { ref, reactive } from 'vue'
 import CategoryDialog from '../category/CategoryForm.vue'
 import { categoryList, deleteCategory } from '@/api/course/category'
-import { tranListToTreeData } from '@/utils/tree.js'
+import { tranListToTreeData } from '@/utils/tree'
 
 
 /**

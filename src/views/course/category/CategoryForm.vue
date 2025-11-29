@@ -28,7 +28,7 @@
 </template>
 <script setup>
 import { defineProps, defineEmits } from 'vue'
-import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
+import { tranListToTreeData, defaultProps } from '@/utils/tree'
 import { categoryList,addCategory, modifyCategory } from '@/api/course/category'
 import { ElMessage } from 'element-plus'
 

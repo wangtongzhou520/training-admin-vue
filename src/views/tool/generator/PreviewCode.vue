@@ -56,7 +56,7 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
 import CodeHighlight from './components/CodeHighlight.vue'
-import { tranListToTreeData2 } from '@/utils/tree.js'
+import { tranListToTreeData2 } from '@/utils/tree'
 import { getPreviewCode } from '@/api/tool/generator'
 
 // 加载中的状态

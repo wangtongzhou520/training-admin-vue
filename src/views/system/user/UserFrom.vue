@@ -54,7 +54,7 @@ import { defineProps, defineEmits } from 'vue'
 import { addUser, modifyUser } from '@/api/user'
 import { deptList } from '@/api/dept'
 import { ElMessage } from 'element-plus'
-import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
+import { tranListToTreeData, defaultProps } from '@/utils/tree'
 
 /**
  * 部门

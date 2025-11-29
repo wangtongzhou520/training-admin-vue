@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
+import { tranListToTreeData, defaultProps } from '@/utils/tree'
 import { ElTree } from 'element-plus'
 import { categoryList } from '@/api/course/category'
 

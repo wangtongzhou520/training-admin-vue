@@ -16,7 +16,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { filterRouters, getMenus } from '@/utils/route.js'
+import { filterRouters, getMenus } from '@/utils/route'
 import SidebarItem from './SidebarItem.vue'
 import { systemUseStore } from '@/stores/system'
 

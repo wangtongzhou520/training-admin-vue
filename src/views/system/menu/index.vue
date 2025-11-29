@@ -52,7 +52,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { menuList, deleteMenu } from '@/api/menu'
-import { tranListToTreeData } from '@/utils/tree.js'
+import { tranListToTreeData } from '@/utils/tree'
 import MenuDialog from '../menu/MenuForm.vue'
 
 /**

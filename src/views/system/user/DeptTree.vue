@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
+import { tranListToTreeData, defaultProps } from '@/utils/tree'
 import { ElTree } from 'element-plus'
 import { deptList } from '@/api/dept'
 

@@ -35,7 +35,7 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue'
 import { modifyFile } from '@/api/tool/file'
-import { tranListToTreeData, defaultProps } from '@/utils/tree.js'
+import { tranListToTreeData, defaultProps } from '@/utils/tree'
 import { fileCategoryList } from '@/api/tool/file'
 import { ElMessage } from 'element-plus'
 

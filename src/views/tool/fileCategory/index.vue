@@ -44,7 +44,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { fileCategoryList, deleteFileCategory } from '@/api/tool/file'
-import { tranListToTreeData } from '@/utils/tree.js'
+import { tranListToTreeData } from '@/utils/tree'
 import FileCategoryDialog from '../fileCategory/FileCategoryForm.vue'
 
 /**

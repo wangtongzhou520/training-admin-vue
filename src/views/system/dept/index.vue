@@ -48,7 +48,7 @@
 import { ref, reactive } from 'vue'
 import { deptList, deleteDept } from '@/api/dept'
 import { deleteStateTypeList } from '@/constant/dept'
-import { tranListToTreeData } from '@/utils/tree.js'
+import { tranListToTreeData } from '@/utils/tree'
 import DeptDialog from '../dept/DeptForm.vue'
 
 /**
